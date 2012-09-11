@@ -8,14 +8,17 @@
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
         android:layout_height="354dp"
+        android:layout_weight="1"
         android:paddingTop="20sp" >
     </ListView>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/music_library" />
+        android:layout_height="25dp"
+        android:layout_weight="9"
+        android:text="@string/music_library"
+        android:onClick="goToLibrary" />
     
 </LinearLayout>
 

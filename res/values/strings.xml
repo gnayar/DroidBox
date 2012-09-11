@@ -4,5 +4,8 @@
     <string name="music_library">View Music Library</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main2">MainActivity</string>
+    <string name="title_activity_music_library">MusicLibrary</string>
 
 </resources>

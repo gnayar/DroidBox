@@ -7,10 +7,11 @@ import java.util.List;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ListView;
-
-public class SongList extends Activity {
+public class Main extends Activity {
 	private ListView listViewSong;
 	private Context ctx;
 	
@@ -25,6 +26,11 @@ public class SongList extends Activity {
         }
         listViewSong = (ListView)findViewById(R.id.song_list);
         listViewSong.setAdapter(new SongListAdapter(ctx, R.layout.song_row_item, songs));
+    }
+    
+    public void goToLibrary(View view){
+    	Intent intent = new Intent(this,MusicLibrary.class);
+    	startActivity(intent);
     }
 
     @Override
