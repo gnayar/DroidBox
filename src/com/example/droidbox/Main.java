@@ -26,8 +26,7 @@ public class Main extends Activity {
         }
         listViewSong = (ListView)findViewById(R.id.song_list);
         listViewSong.setAdapter(new SongListAdapter(ctx, R.layout.song_row_item, songs));
-        ScanIn scan = new ScanIn();
-        scan.read();
+
     }
     
     public void goToLibrary(View view){

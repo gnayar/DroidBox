@@ -1,11 +1,21 @@
-package com.example.droidbox;
+//package com.example.droidbox;
+
+/*
+ * This class works when the package com.example.droidbox is commented but it does not work when it is uncommented.
+ * To get the app itself (which has nothing to do with this class) I need to uncomment the line. Not sure
+ * what I need to fix for this. Maybe it shouldn't be in this folder???
+ * -jmfurlott 09/12
+ * 
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 
 public class ScanIn {
-	private int currentSyncCode;
+	public int currentSyncCode;
+	public String artist, album, song;
 	
 	public ScanIn() {
 		//if there is no sync code (on initialization) then just set to 0 so method will now to update it
@@ -31,10 +41,19 @@ public class ScanIn {
 			}
 			else {
 				while(scanner.hasNextLine()) {
-					String artist = scanner.nextLine();
-					String song = scanner.nextLine();
-					String album = scanner.nextLine();
+					if(scanner.hasNextLine()) {
+						artist = scanner.nextLine();
+					}
+					if(scanner.hasNextLine()) {
+						song = scanner.nextLine();
+					}
+					if(scanner.hasNextLine()) {
+					album = scanner.nextLine();
+					}
 					System.out.println(artist + song + album); //only to check to see if this is working
+					
+					//TODO: create song objects and save the properties into Songs and then put them into an ArrayList<Song>
+					
 				}
 				scanner.close();
 				
