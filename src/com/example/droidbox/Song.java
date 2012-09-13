@@ -4,6 +4,12 @@ public class Song {
 	private String title;
 	private String artist;
 	private String album;
+	
+	public Song() {
+		title = "";
+		artist = "";
+		album = "";
+	}
 	public Song(String title, String artist, String album) {
 		super();
 		this.title = title;

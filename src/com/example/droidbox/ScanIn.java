@@ -1,19 +1,9 @@
 package com.example.droidbox;
-
-
-
-/*
- * This class works when the package com.example.droidbox is commented but it does not work when it is uncommented.
- * To get the app itself (which has nothing to do with this class) I need to uncomment the line. Not sure
- * what I need to fix for this. Maybe it shouldn't be in this folder???
- * -jmfurlott 09/12
- * 
- */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 
 public class ScanIn {
@@ -30,7 +20,7 @@ public class ScanIn {
 	}
 	
 	public ArrayList<Song> read() {  //TODO: return type of ArrayList<Song>
-		ArrayList<Song> songs= new ArrayList<Song>();
+		ArrayList<Song> songs = new ArrayList<Song>();
 		try { 
 			File file = new File("update.txt");
 			Scanner scanner = new Scanner(file);
@@ -73,9 +63,5 @@ public class ScanIn {
 		return songs;
 	}
 	
-	public static void main(String[] args) {
-		ScanIn scan = new ScanIn();
-		scan.read();
-	}
 	
 }
