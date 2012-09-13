@@ -12,6 +12,7 @@ package com.example.droidbox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -28,10 +29,12 @@ public class ScanIn {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
 	}
 	
-	public void read() {  //TODO: return type of ArrayList<Song>
+	public ArrayList<Song> read() {  //TODO: return type of ArrayList<Song>
+		ArrayList<Song> songs= new ArrayList<Song>();
 		try { 
 			File file = new File("update.txt");
 			Scanner scanner = new Scanner(file);
+			
 			
 			//check to see whether or not we should sync
 			int newSyncCode = scanner.nextInt();
@@ -54,16 +57,20 @@ public class ScanIn {
 					}
 					System.out.println(artist + song + album); //only to check to see if this is working
 					
+					songs.add(new Song(song, artist, album));
 					//TODO: create song objects and save the properties into Songs and then put them into an ArrayList<Song>
+					//Added, test to see if it works - Gautam 
 					
 				}
 				scanner.close();
 				
+				
 			}
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			e.printStackTrace();//what happens to songs list here??
 		}
+		return songs;
 	}
 	
 	public static void main(String[] args) {
