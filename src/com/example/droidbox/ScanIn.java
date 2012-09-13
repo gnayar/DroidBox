@@ -1,4 +1,6 @@
-//package com.example.droidbox;
+package com.example.droidbox;
+
+
 
 /*
  * This class works when the package com.example.droidbox is commented but it does not work when it is uncommented.
