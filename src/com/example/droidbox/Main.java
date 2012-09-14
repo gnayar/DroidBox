@@ -24,7 +24,7 @@ public class Main extends Activity {
         
         //what I want to do but it won't print anything. I believe my scanner class is working
         //it works when I put use the console and put the file outside of this project (something with the package is screwing up)
-        ScanIn scan = new ScanIn();
+        ReadFile scan = new ReadFile();
         ArrayList<Song> songs = scan.read();
         //but it isn't adding the songs I have in update.txt? it only adds what is in this for loop below
         
