@@ -1,17 +1,15 @@
 package com.example.droidbox;
 
 import java.util.ArrayList;
-import java.util.List;
 
-
-
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 public class Main extends Activity {
 	private ListView listViewSong;
 	private Context ctx;
@@ -22,11 +20,31 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         ctx = this;
         
-        //what I want to do but it won't print anything. I believe my scanner class is working
-        //it works when I put use the console and put the file outside of this project (something with the package is screwing up)
         ReadFile scan = new ReadFile();
         ArrayList<Song> songs = scan.read();
-        //but it isn't adding the songs I have in update.txt? it only adds what is in this for loop below
+        if(scan.isSynced() == false) {
+        	ctx = getApplicationContext();
+        	CharSequence updatedText = scan.getNewSyncCode();
+        	int duration = Toast.LENGTH_LONG;
+        	
+        	Toast toast = Toast.makeText(ctx, updatedText, duration);
+        	toast.show();
+        }
+        else {
+        	ctx = getApplicationContext();
+        	CharSequence updatedText = scan.getNewSyncCode();
+        	int duration = Toast.LENGTH_LONG;
+        	
+        	Toast toast = Toast.makeText(ctx, updatedText, duration);
+        	toast.show();
+        }
+        
+        //not reading in correctly
+        
+        
+        
+        
+
         
      //  ArrayList<Song> songs = new ArrayList<Song>();
         for(int i=0;i<9;i++){

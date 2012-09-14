@@ -4,19 +4,25 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import android.content.Context;
+import android.widget.Toast;
+
 
 
 public class ScanIn {
 	public int currentSyncCode;
 	public String artist, album, song;
+	public boolean synced;
 	
 	public ScanIn() {
 		//if there is no sync code (on initialization) then just set to 0 so method will now to update it
 		currentSyncCode = 0;
+		synced = false;
 	}
 	
 	public ScanIn(int currentSyncCode) {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
+	
 	}
 	
 	public ArrayList<Song> read() {  //TODO: return type of ArrayList<Song>
@@ -32,7 +38,7 @@ public class ScanIn {
 			if(currentSyncCode == newSyncCode) {
 				//do not sync
 				//do something else here
-				System.out.println("Updated");
+				synced = true;
 			}
 			else {
 				while(scanner.hasNextLine()) {
@@ -63,5 +69,7 @@ public class ScanIn {
 		return songs;
 	}
 	
-	
+	public boolean isSynced(boolean synced) {
+		return this.synced;
+	}
 }
