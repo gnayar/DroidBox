@@ -2,6 +2,9 @@ package com.example.droidbox;
 import java.io.*;
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.widget.Toast;
 public class ReadFile {
 	public int currentSyncCode;
 	private String newSyncCode1;
@@ -19,15 +22,16 @@ public class ReadFile {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
 	}
 	
-	public ArrayList<Song> read(File file) {
+	public ArrayList<Song> read(String file, Context context) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		try {
 		
-		
-			FileInputStream fstream = new FileInputStream(file);
+			Toast.makeText(context, "scanning", Toast.LENGTH_LONG).show();
+			AssetManager am = context.getAssets();
+			InputStream fstream = am.open(file);
 			//HAVING PROBLEM WITH THIS LINE ^^^^^^^^^
 			//not seeing the file even though the File object has been created.
-			newSyncCode1 = "got here";
+			
 			
 			//move this variable around to test toasts
 			
@@ -53,6 +57,7 @@ public class ReadFile {
 			in.close(); //close the buffer
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+			Toast.makeText(context, "file not found", Toast.LENGTH_LONG).show();
 			//newSyncCode1 = "Caught exception";
 		}
 		return songs;

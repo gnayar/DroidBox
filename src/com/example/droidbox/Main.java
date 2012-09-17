@@ -21,24 +21,20 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         ctx = this;
 		String path = ctx.getFilesDir().getAbsolutePath();//returns current directory.
-		File file = new File(path, "update.txt");
-        ReadFile scan = new ReadFile();
-        ArrayList<Song> songs = scan.read(file);
+//		File file = new File(path, "update.txt");
+       ReadFile scan = new ReadFile();
+        ArrayList<Song> songs = scan.read("update.txt",this);
         
         if(scan.isSynced() == false) {
-        	ctx = getApplicationContext();
-        	CharSequence updatedText = scan.getNewSyncCode();
-        	int duration = Toast.LENGTH_LONG;
         	
-        	Toast toast = Toast.makeText(ctx, updatedText, duration);
+        	CharSequence updatedText = scan.getNewSyncCode();
+        	
+        	Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
         	toast.show();
         }
         else {
-        	ctx = getApplicationContext();
         	CharSequence updatedText = scan.getNewSyncCode();
-        	int duration = Toast.LENGTH_LONG;
-        	
-        	Toast toast = Toast.makeText(ctx, updatedText, duration);
+        	Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
         	toast.show();
         }
         
@@ -59,6 +55,7 @@ public class Main extends Activity {
     }
     
     public void goToLibrary(View view){
+    	Toast.makeText(this, "jump", Toast.LENGTH_LONG).show();
     	Intent intent = new Intent(this,MusicLibrary.class);
     	startActivity(intent);
     }
