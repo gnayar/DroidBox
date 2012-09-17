@@ -11,7 +11,7 @@ public class ReadFile {
 	public ReadFile() {
 		//if there is no sync code (on initialization) then just set to 0 so method will now to update it
 		currentSyncCode = 0;
-		newSyncCode1 = "constructed";
+		//newSyncCode1 = "constructed";
 		synced = false;
 	}
 	
@@ -24,13 +24,12 @@ public class ReadFile {
 		try {
 			File file = new File("update.txt");
 			
-			
-			
-			
 			FileInputStream fstream = new FileInputStream(file);
 			//HAVING PROBLEM WITH THIS LINE ^^^^^^^^^
+			//not seeing the file even though the File object has been created.
+			newSyncCode1 = "file input stream created";
 			
-			
+			//move this variable around to test toasts
 			
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -54,7 +53,7 @@ public class ReadFile {
 			in.close(); //close the buffer
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-			newSyncCode1 = "Caught exception";
+			//newSyncCode1 = "Caught exception";
 		}
 		return songs;
 	}
