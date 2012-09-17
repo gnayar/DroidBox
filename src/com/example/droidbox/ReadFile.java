@@ -19,15 +19,15 @@ public class ReadFile {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
 	}
 	
-	public ArrayList<Song> read() {
+	public ArrayList<Song> read(File file) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		try {
-			File file = new File("update.txt");
-			
+		
+		
 			FileInputStream fstream = new FileInputStream(file);
 			//HAVING PROBLEM WITH THIS LINE ^^^^^^^^^
 			//not seeing the file even though the File object has been created.
-			newSyncCode1 = "file input stream created";
+			newSyncCode1 = "got here";
 			
 			//move this variable around to test toasts
 			

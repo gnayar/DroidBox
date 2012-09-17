@@ -1,5 +1,6 @@
 package com.example.droidbox;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -19,9 +20,11 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ctx = this;
-        
+		String path = ctx.getFilesDir().getAbsolutePath();//returns current directory.
+		File file = new File(path, "update.txt");
         ReadFile scan = new ReadFile();
-        ArrayList<Song> songs = scan.read();
+        ArrayList<Song> songs = scan.read(file);
+        
         if(scan.isSynced() == false) {
         	ctx = getApplicationContext();
         	CharSequence updatedText = scan.getNewSyncCode();
