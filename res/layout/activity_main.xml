@@ -9,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="354dp"
         android:layout_weight="1"
-        android:paddingTop="20sp" >
+        android:paddingTop="20sp" 
+>
     </ListView>
 
     <Button
