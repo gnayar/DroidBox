@@ -6,14 +6,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+//@SuppressLint("NewApi")
 public class Main extends Activity {
 	private ListView listViewSong;
 	private Context context;
@@ -46,10 +51,7 @@ public class Main extends Activity {
         	CharSequence updatedText = scan.getNewSyncCode();
         	Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
         	toast.show();
-        }
-        
-        //not reading in correctly
-        
+        }    
         
         
         
@@ -62,6 +64,9 @@ public class Main extends Activity {
          
         listViewSong = (ListView)findViewById(R.id.song_list);
         listViewSong.setAdapter(new SongListAdapter(context, R.layout.song_row_item, songs));
+        
+        //allows the listview to have the popupmenu after a long press.
+        registerForContextMenu(listViewSong);
     }
     
     public void testFileWriter(){
@@ -93,4 +98,16 @@ public class Main extends Activity {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
+    
+    //creates a long press menu. so now you can long press and a menu pops up: will be to add songs to queue
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
+    	super.onCreateContextMenu(menu, view, menuInfo);
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.actions, menu);
+    }
+    	
+    	
+    	
+    	
+    
 }
