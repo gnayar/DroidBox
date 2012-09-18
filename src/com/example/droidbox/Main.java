@@ -1,6 +1,9 @@
 package com.example.droidbox;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -22,8 +25,15 @@ public class Main extends Activity {
         ctx = this;
 		String path = ctx.getFilesDir().getAbsolutePath();//returns current directory.
 //		File file = new File(path, "update.txt");
-       ReadFile scan = new ReadFile();
-        ArrayList<Song> songs = scan.read("update.txt",this);
+        //
+		
+		File file = this.getFileStreamPath("update.txt");
+		if(!file.exists()){
+			testFileWriter();
+		}
+		File myDir = this.getFilesDir();
+		ReadFile scan = new ReadFile();
+        ArrayList<Song> songs = scan.read(myDir,"/update.txt",this);
         
         if(scan.isSynced() == false) {
         	
@@ -54,6 +64,24 @@ public class Main extends Activity {
         listViewSong.setAdapter(new SongListAdapter(ctx, R.layout.song_row_item, songs));
     }
     
+    public void testFileWriter(){
+    		final String TESTSTRING = new String("1\nArtist: Artist1\nSong: Song1\nAlbum: Album1");
+    		File myDir = new File(getFilesDir().getAbsolutePath());
+    		try {
+    			FileWriter fw = new FileWriter(myDir + "/update.txt");
+				fw.write(TESTSTRING);
+				fw.close();
+				Toast.makeText(this, "file created", Toast.LENGTH_SHORT).show();
+				
+    		} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    }
     public void goToLibrary(View view){
     	Toast.makeText(this, "jump", Toast.LENGTH_LONG).show();
     	Intent intent = new Intent(this,MusicLibrary.class);

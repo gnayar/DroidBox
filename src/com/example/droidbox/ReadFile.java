@@ -3,7 +3,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.widget.Toast;
 public class ReadFile {
 	public int currentSyncCode;
@@ -22,25 +21,20 @@ public class ReadFile {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
 	}
 	
-	public ArrayList<Song> read(String file, Context context) {
+	public ArrayList<Song> read(File myDir,String file, Context context) {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		try {
 		
-			Toast.makeText(context, "scanning", Toast.LENGTH_LONG).show();
-			AssetManager am = context.getAssets();
-			InputStream fstream = am.open(file);
-			//HAVING PROBLEM WITH THIS LINE ^^^^^^^^^
-			//not seeing the file even though the File object has been created.
+			Toast.makeText(context, "scanning", Toast.LENGTH_SHORT).show();
 			
-			
-			//move this variable around to test toasts
-			
-			DataInputStream in = new DataInputStream(fstream);
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+			BufferedReader reader = new BufferedReader(new FileReader(myDir + file));
+			Toast.makeText(context, "file found", Toast.LENGTH_SHORT).show();
+
 			//for debugging - trying to check if reading sync code correctly.
 			newSyncCode1 = reader.readLine();
+			Toast.makeText(context, "read int: "+newSyncCode1+"b", Toast.LENGTH_SHORT).show();
 			int newSyncCode = Integer.parseInt(newSyncCode1); //first read new sync code and convert to int
-			
+			Toast.makeText(context, "sync check", Toast.LENGTH_SHORT).show();
 			if(currentSyncCode == newSyncCode) {
 				synced = true;
 				//exit
@@ -48,17 +42,28 @@ public class ReadFile {
 			else {
 				//library needs to be updated
 				//how can I tell the file is done? there is no hasNext() ??
+				Toast.makeText(context, "updating", Toast.LENGTH_SHORT).show();
 				while( (artist = reader.readLine()) != null) {
 					album = reader.readLine();
 					song = reader.readLine();
 					songs.add(new Song(artist, album, song));
+					Toast.makeText(context, "added", Toast.LENGTH_SHORT).show();
 				}
 			}
-			in.close(); //close the buffer
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-			Toast.makeText(context, "file not found", Toast.LENGTH_LONG).show();
-			//newSyncCode1 = "Caught exception";
+			//in.close(); //close the buffer
+			reader.close();
+		}catch (FileNotFoundException e) {
+		    e.printStackTrace();
+		    Toast.makeText(context, "file not found", Toast.LENGTH_SHORT).show();
+		} catch (IOException e) {
+		    e.printStackTrace(); 
+		    Toast.makeText(context, "could not write", Toast.LENGTH_SHORT).show();
+		}catch(NumberFormatException e){
+			e.printStackTrace(); 
+		    Toast.makeText(context, "number issue", Toast.LENGTH_SHORT).show();
+		}catch (Exception e) {
+		    e.printStackTrace(); 
+		    Toast.makeText(context, "general exception", Toast.LENGTH_SHORT).show();
 		}
 		return songs;
 	}
