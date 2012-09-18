@@ -16,14 +16,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 public class Main extends Activity {
 	private ListView listViewSong;
-	private Context ctx;
+	private Context context;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ctx = this;
-		String path = ctx.getFilesDir().getAbsolutePath();//returns current directory.
+        context = this;
+		String path = context.getFilesDir().getAbsolutePath();//returns current directory.
 //		File file = new File(path, "update.txt");
         //
 		
@@ -61,16 +61,16 @@ public class Main extends Activity {
         }
          
         listViewSong = (ListView)findViewById(R.id.song_list);
-        listViewSong.setAdapter(new SongListAdapter(ctx, R.layout.song_row_item, songs));
+        listViewSong.setAdapter(new SongListAdapter(context, R.layout.song_row_item, songs));
     }
     
     public void testFileWriter(){
     		final String TESTSTRING = new String("1\nArtist: Artist1\nSong: Song1\nAlbum: Album1");
     		File myDir = new File(getFilesDir().getAbsolutePath());
     		try {
-    			FileWriter fw = new FileWriter(myDir + "/update.txt");
-				fw.write(TESTSTRING);
-				fw.close();
+    			FileWriter write = new FileWriter(myDir + "/update.txt");
+				write.write(TESTSTRING);
+				write.close();
 				Toast.makeText(this, "file created", Toast.LENGTH_SHORT).show();
 				
     		} catch (FileNotFoundException e) {
