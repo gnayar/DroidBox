@@ -38,7 +38,7 @@ public class Main extends Activity {
 		}
 		File myDir = this.getFilesDir();
 		ReadFile scan = new ReadFile();
-        ArrayList<Song> songs = scan.read(myDir,"/update.txt",this);
+        SongList songs = scan.read(myDir,"/update.txt",this);
         
         if(scan.isSynced() == false) {
         	
@@ -54,13 +54,12 @@ public class Main extends Activity {
         }    
         
         
-        
+        //examples just test SongList methods
+        songs.add(new Song("song","cccccc","album"));
+        songs.add(new Song("song","ppppp","album"));
+       	songs.add(new Song("song","aaaaaaa","album"));
+       	songs = songs.sortByArtist();
 
-        
-     //  ArrayList<Song> songs = new ArrayList<Song>();
-        for(int i=0;i<9;i++){
-       	songs.add(new Song("title","artist","album"));
-        }
          
         listViewSong = (ListView)findViewById(R.id.song_list);
         listViewSong.setAdapter(new SongListAdapter(context, R.layout.song_row_item, songs));

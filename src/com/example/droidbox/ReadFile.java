@@ -21,8 +21,8 @@ public class ReadFile {
 		currentSyncCode = this.currentSyncCode; //hopefully can pass in the currentSynccode
 	}
 	
-	public ArrayList<Song> read(File myDir,String file, Context context) {
-		ArrayList<Song> songs = new ArrayList<Song>();
+	public SongList read(File myDir,String file, Context context) {
+		SongList songs = new SongList();
 		try {
 		
 			//Toast.makeText(context, "scanning", Toast.LENGTH_SHORT).show();

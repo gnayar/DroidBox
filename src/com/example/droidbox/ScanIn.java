@@ -25,8 +25,8 @@ public class ScanIn {
 	
 	}
 	
-	public ArrayList<Song> read() {  //TODO: return type of ArrayList<Song>
-		ArrayList<Song> songs = new ArrayList<Song>();
+	public SongList read() {  //TODO: return type of ArrayList<Song>
+		SongList songs = new SongList();
 		try { 
 			File file = new File("update.txt");
 			Scanner scanner = new Scanner(file);
