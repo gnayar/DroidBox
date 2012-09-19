@@ -34,7 +34,7 @@ public class Main extends Activity {
 		
 		File file = this.getFileStreamPath("update.txt");
 		if(!file.exists()){
-			testFileWriter();
+			testFileWriter t1 = new testFileWriter(this);
 		}
 		File myDir = this.getFilesDir();
 		ReadFile scan = new ReadFile();
@@ -44,13 +44,13 @@ public class Main extends Activity {
         	
         	CharSequence updatedText = scan.getNewSyncCode();
         	
-        	Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-        	toast.show();
+        	//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+        	//toast.show();
         }
         else {
         	CharSequence updatedText = scan.getNewSyncCode();
-        	Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-        	toast.show();
+        	//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+        	//toast.show();
         }    
         
         
@@ -69,24 +69,7 @@ public class Main extends Activity {
         registerForContextMenu(listViewSong);
     }
     
-    public void testFileWriter(){
-    		final String TESTSTRING = new String("1\nArtist: Artist1\nSong: Song1\nAlbum: Album1");
-    		File myDir = new File(getFilesDir().getAbsolutePath());
-    		try {
-    			FileWriter write = new FileWriter(myDir + "/update.txt");
-				write.write(TESTSTRING);
-				write.close();
-				Toast.makeText(this, "file created", Toast.LENGTH_SHORT).show();
-				
-    		} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-    		
-    }
+    
     public void goToLibrary(View view){
     	Toast.makeText(this, "jump", Toast.LENGTH_LONG).show();
     	Intent intent = new Intent(this,MusicLibrary.class);

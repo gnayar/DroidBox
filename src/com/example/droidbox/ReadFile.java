@@ -25,16 +25,16 @@ public class ReadFile {
 		ArrayList<Song> songs = new ArrayList<Song>();
 		try {
 		
-			Toast.makeText(context, "scanning", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "scanning", Toast.LENGTH_SHORT).show();
 			
 			BufferedReader reader = new BufferedReader(new FileReader(myDir + file));
-			Toast.makeText(context, "file found", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "file found", Toast.LENGTH_SHORT).show();
 
 			//for debugging - trying to check if reading sync code correctly.
 			newSyncCode1 = reader.readLine();
-			Toast.makeText(context, "read int: "+newSyncCode1+"b", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "read int: "+newSyncCode1+"b", Toast.LENGTH_SHORT).show();
 			int newSyncCode = Integer.parseInt(newSyncCode1); //first read new sync code and convert to int
-			Toast.makeText(context, "sync check", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "sync check", Toast.LENGTH_SHORT).show();
 			if(currentSyncCode == newSyncCode) {
 				synced = true;
 				//exit
