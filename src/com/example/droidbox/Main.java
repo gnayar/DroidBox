@@ -55,12 +55,17 @@ public class Main extends Activity {
         
         
         //examples just test SongList methods
-        songs.add(new Song("song","cccccc","album"));
-        songs.add(new Song("song","ppppp","album"));
-       	songs.add(new Song("song","aaaaaaa","album"));
-       	songs = songs.sortByArtist();
-
-         
+        songs.add(new Song("song","cccccc","impoverish"));
+        songs.add(new Song("song","ppppp","impracticable"));
+       	songs.add(new Song("song","aaaaaaa","impratical"));
+       	songs.add(new Song("song","ppppp","imprecation"));
+       	songs.add(new Song("song","zzzzpp","impregnate"));
+       	songs.add(new Song("song","dddp","impostume"));
+       	songs.add(new Song("song","dddpep","impotent"));
+       	songs.add(new Song("song","paaaapp","impotency"));
+       	
+       	songs.sortByArtist();
+       	
         listViewSong = (ListView)findViewById(R.id.song_list);
         listViewSong.setAdapter(new SongListAdapter(context, R.layout.song_row_item, songs));
         
@@ -88,8 +93,8 @@ public class Main extends Activity {
     	inflater.inflate(R.menu.actions, menu);
     }
     	
-    	
-    	
+    
     	
     
 }
+

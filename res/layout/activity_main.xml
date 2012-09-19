@@ -8,7 +8,7 @@
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
         android:layout_height="354dp"
-        android:layout_weight="1"
+        android:layout_weight="9"
         android:paddingTop="20sp" 
 >
     </ListView>
@@ -17,9 +17,8 @@
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_weight="9"
+        android:layout_weight="3"
         android:text="@string/music_library"
         android:onClick="goToLibrary" />
     
 </LinearLayout>
-
