@@ -1,59 +1,183 @@
 package com.example.droidbox;
 
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Vector;
+
+import android.content.Context;
 import android.os.Bundle;
-
-import java.io.File;
-import java.util.ArrayList;
-import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
 
-public class MusicLibrary extends Activity {
-	int currentScreen = 0;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music_library);
-        MyPagerAdapter adapter = new MyPagerAdapter();
-        ViewPager tabs = (ViewPager) findViewById(R.id.viewpager);
-        tabs.setAdapter(adapter);
-        tabs.setCurrentItem(currentScreen);
-        Toast.makeText(this, "loading", Toast.LENGTH_SHORT).show();
-        //loadLibraries(currentScreen);
-    }
 
-    private void loadLibraries(int currentScreen) {
-    	Toast.makeText(this, "lib loading", Toast.LENGTH_SHORT).show();
-		File myDir = this.getFilesDir();
-		ReadFile scan = new ReadFile();
-        ArrayList<Song> songs = scan.read(myDir,"/update.txt",this);
-        Toast.makeText(this, "song array created", Toast.LENGTH_SHORT).show();
-        int resId = 0;
-        switch (currentScreen) {
-        case 0:
-            resId = R.id.titleSort;
-            break;
-        case 1:
-            resId = R.id.artistSort;
-            break;
-        case 2:
-            resId = R.id.albumSort;
-            break;
-        case 3:
-            resId = R.id.genreSort;
-            break;
+public class MusicLibrary extends FragmentActivity implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+	private TabHost mTabHost;
+	private ViewPager mViewPager;
+	//private HashMap<String, TabInfo> mapTabInfo = new HashMap<String, MusicLibrary.TabInfo>();
+	private MyPagerAdapter mPagerAdapter;
+	/**
+	 *
+	 * @author mwho
+	 * Maintains extrinsic info of a tab's construct
+	 */
+	private class TabInfo {
+		 private String tag;
+         private Class<?> clss;
+         private Bundle args;
+         private Fragment fragment;
+         TabInfo(String tag, Class<?> clazz, Bundle args) {
+        	 this.tag = tag;
+        	 this.clss = clazz;
+        	 this.args = args;
+         }
+
+	}
+	/**
+	 * A simple factory that returns dummy views to the Tabhost
+	 * @author mwho
+	 */
+	class TabFactory implements TabContentFactory {
+
+		private final Context mContext;
+
+	    /**
+	     * @param context
+	     */
+	    public TabFactory(Context context) {
+	        mContext = context;
+	    }
+
+	    /** (non-Javadoc)
+	     * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
+	     */
+	    public View createTabContent(String tag) {
+	        View v = new View(mContext);
+	        v.setMinimumWidth(0);
+	        v.setMinimumHeight(0);
+	        return v;
+	    }
+
+	}
+	/** (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Inflate the layout
+		setContentView(R.layout.activity_music_library);
+		// Initialise the TabHost
+		this.initialiseTabHost(savedInstanceState);
+		if (savedInstanceState != null) {
+            mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
         }
-    	//ListView listViewSong = (ListView)findViewById(resId);
-        //listViewSong.setAdapter(new SongListAdapter(this, R.layout.song_row_item, songs));
+		// Intialise ViewPager
+		this.intialiseViewPager();
+		
 		
 	}
 
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_music_library, menu);
-        return true;
+	/** (non-Javadoc)
+     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
+     */
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("tab", mTabHost.getCurrentTabTag()); //save the tab selected
+        super.onSaveInstanceState(outState);
     }
-    
+
+    /**
+     * Initialise ViewPager
+     */
+    private void intialiseViewPager() {
+
+		List<Fragment> fragments = new Vector<Fragment>();
+		fragments.add(Fragment.instantiate(this, TitleTab.class.getName()));
+		fragments.add(Fragment.instantiate(this, AlbumTab.class.getName()));
+		fragments.add(Fragment.instantiate(this, ArtistTab.class.getName()));
+		fragments.add(Fragment.instantiate(this, GenreTab.class.getName()));
+		this.mPagerAdapter  = new MyPagerAdapter(super.getSupportFragmentManager(), fragments);
+		//
+		this.mViewPager = (ViewPager)super.findViewById(R.id.viewpager);
+		this.mViewPager.setAdapter(this.mPagerAdapter);
+		this.mViewPager.setOnPageChangeListener(this);
+    }
+
+	/**
+	 * Initialise the Tab Host
+	 */
+	private void initialiseTabHost(Bundle args) {
+		mTabHost = (TabHost)findViewById(android.R.id.tabhost);
+        mTabHost.setup();
+        TabInfo tabInfo = null;
+        MusicLibrary.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator("Title"), ( tabInfo = new TabInfo("Tab1", TitleTab.class, args)));
+        //this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        MusicLibrary.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator("Album"), ( tabInfo = new TabInfo("Tab2", AlbumTab.class, args)));
+        //this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        MusicLibrary.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Artist"), ( tabInfo = new TabInfo("Tab3", ArtistTab.class, args)));
+        //this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        MusicLibrary.AddTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab4").setIndicator("Genre"), ( tabInfo = new TabInfo("Tab4", GenreTab.class, args)));
+        //this.mapTabInfo.put(tabInfo.tag, tabInfo);
+        // Default to first tab
+        //this.onTabChanged("Tab1");
+        //
+        mTabHost.setOnTabChangedListener(this);
+	}
+
+	/**
+	 * Add Tab content to the Tabhost
+	 * @param activity
+	 * @param tabHost
+	 * @param tabSpec
+	 * @param clss
+	 * @param args
+	 */
+	private static void AddTab(MusicLibrary activity, TabHost tabHost, TabHost.TabSpec tabSpec, TabInfo tabInfo) {
+		// Attach a Tab view factory to the spec
+		tabSpec.setContent(activity.new TabFactory(activity));
+        tabHost.addTab(tabSpec);
+	}
+
+	/** (non-Javadoc)
+	 * @see android.widget.TabHost.OnTabChangeListener#onTabChanged(java.lang.String)
+	 */
+	public void onTabChanged(String tag) {
+		//TabInfo newTab = this.mapTabInfo.get(tag);
+		int pos = this.mTabHost.getCurrentTab();
+		this.mViewPager.setCurrentItem(pos);
+    }
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrolled(int, float, int)
+	 */
+
+	public void onPageScrolled(int position, float positionOffset,
+			int positionOffsetPixels) {
+		// TODO Auto-generated method stub
+
+	}
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)
+	 */
+
+	public void onPageSelected(int position) {
+		// TODO Auto-generated method stub
+		this.mTabHost.setCurrentTab(position);
+	}
+
+	/* (non-Javadoc)
+	 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageScrollStateChanged(int)
+	 */
+	
+	public void onPageScrollStateChanged(int state) {
+		// TODO Auto-generated method stub
+
+	}
 }
+
+
+

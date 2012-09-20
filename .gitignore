@@ -16,6 +16,8 @@ local.properties
 .settings/
 .loadpath
 *.class
+*.apk
+*.dex
 
 # External tool builders
 .externalToolBuilders/
