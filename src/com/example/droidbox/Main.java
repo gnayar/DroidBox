@@ -1,12 +1,6 @@
 package com.example.droidbox;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +22,7 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
-		String path = context.getFilesDir().getAbsolutePath();//returns current directory.
+		
 //		File file = new File(path, "update.txt");
         //
 		
@@ -71,6 +65,7 @@ public class Main extends Activity {
         
         //allows the listview to have the popupmenu after a long press.
         registerForContextMenu(listViewSong);
+        
     }
     
     

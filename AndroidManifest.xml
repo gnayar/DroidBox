@@ -24,11 +24,12 @@
             android:name=".MusicLibrary"
             android:label="@string/title_activity_music_library" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.LIBRARY" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+     
     </application>
 
 </manifest>
