@@ -9,12 +9,42 @@ import android.content.Context;
 import android.widget.Toast;
 
 public class testFileWriter {
+	File myDir;
+	FileWriter write;
+	public SongList queue;
+	
+	
+	public testFileWriter() {
+		
+	}
 	public testFileWriter(Context context){
-		final String TESTSTRING = new String("1\nArtist: Artist1\nSong: Song1\nAlbum: Album1");
-		File myDir = new File(context.getFilesDir().getAbsolutePath());
+		//final String TESTSTRING = new String("1\nArtist1\nSong1\nAlbum1");
+		myDir = new File(context.getFilesDir().getAbsolutePath());
 		try {
-			FileWriter write = new FileWriter(myDir + "/update.txt");
-			write.write(TESTSTRING);
+			write = new FileWriter(myDir + "/update.txt");
+			//write.write(TESTSTRING);
+			write.close();
+			//Toast.makeText(context, "file created", Toast.LENGTH_SHORT).show();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(Context context, SongList queue) {
+		
+		
+		myDir = new File(context.getFilesDir().getAbsolutePath());
+		try {
+			write = new FileWriter(myDir + "/update.txt");
+			for(int i = 0; i < queue.size(); i++ ){
+				write.write(queue.get(i).getArtist() + "\n" + queue.get(i).getTitle() + "\n" + queue.get(i).getAlbum() + "\n");
+				Toast.makeText(context, queue.get(0).getTitle(), 15);
+			}	
 			write.close();
 			Toast.makeText(context, "file created", Toast.LENGTH_SHORT).show();
 			
@@ -26,4 +56,5 @@ public class testFileWriter {
 			e.printStackTrace();
 		}
 	}
+		
 }

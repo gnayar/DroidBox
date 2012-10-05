@@ -53,7 +53,7 @@ public class ScanIn {
 					}
 					System.out.println(artist + song + album); //only to check to see if this is working
 					
-					songs.add(new Song(song, artist, album));
+					songs.add(new Song(song, artist, album, 11111));
 					//TODO: create song objects and save the properties into Songs and then put them into an ArrayList<Song>
 					//Added, test to see if it works - Gautam 
 					
