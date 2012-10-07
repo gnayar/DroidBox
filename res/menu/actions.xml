@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add_queue"
+    <item android:id="@+id/addQueue"
           android:title="@string/add_queue" />
     <!-- menu group 
     <group android:id="@+id/group_delete">

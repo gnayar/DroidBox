@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class FragmentTwo extends ListFragment
 {
 	
-	
+	Song temp;
 	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -37,6 +37,16 @@ public class FragmentTwo extends ListFragment
 		Context context = (MusicLibrary)getActivity();
 		Toast.makeText(context, (CharSequence) "test", 15).show();
 
+		Song song = (Song) l.getItemAtPosition(position);
+		temp = song;
+		((MusicLibrary)getActivity()).setCurrentSong(temp);
+		((MusicLibrary)getActivity()).sendSongToMain();
+		//Toast.makeText(context, temp.getID(), 15).show();
+		
+	}
+
+	public Song getSong() {
+		return temp;
 	}
 
 

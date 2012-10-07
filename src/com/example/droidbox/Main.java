@@ -1,8 +1,6 @@
 package com.example.droidbox;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 //@SuppressLint("NewApi")
 public class Main extends Activity {
@@ -33,6 +32,8 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        
         setContentView(R.layout.activity_main);
         context = this;
 //		File file = new File(path, "update.txt");
@@ -46,22 +47,21 @@ public class Main extends Activity {
      		testFileWriter t = new testFileWriter(context);
      	}
      	
-			myDir = new File(context.getFilesDir().getAbsolutePath());
-			ReadFile scan = new ReadFile();
-			songs = scan.read(myDir,"/update.txt",this);
-			if(scan.isSynced() == false) {
-			
-				CharSequence updatedText = scan.getNewSyncCode();
-			
-			//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-			//toast.show();
-			}
-			else {
-				CharSequence updatedText = scan.getNewSyncCode();
-			//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-			//toast.show();
-			}    
-     	
+		myDir = new File(context.getFilesDir().getAbsolutePath());
+		ReadFile scan = new ReadFile();
+		songs = scan.read(myDir,"/update.txt",this);
+		if(scan.isSynced() == false) {
+			CharSequence updatedText = scan.getNewSyncCode();
+		
+		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+		//toast.show();
+		}
+		else {
+			CharSequence updatedText = scan.getNewSyncCode();
+		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+		//toast.show();
+		}    
+ 	
 
 
         listViewSong = (ListView)findViewById(R.id.song_list);
@@ -128,6 +128,12 @@ public class Main extends Activity {
     }
     
     public void goToLibrary(View view){
+    	//where the JSON should start to get the music library
+    	
+    	
+    	
+    	
+    	
     	//Toast.makeText(this, "jump", Toast.LENGTH_LONG).show();
     	Intent intent = new Intent(this,MusicLibrary.class);
     	//this.finish();
