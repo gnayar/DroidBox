@@ -28,10 +28,18 @@ public class Main extends Activity {
 	public SongList songs;
 	public File file, myDir;
 	public testFileWriter t1;
+	//JSON
+	public static int check = 1;
+	int TIMEOUT_MILLISEC = 10000;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        if(check == 1) {
+        	start_loginActivity(listViewSong);
+        }
         
         
         setContentView(R.layout.activity_main);
@@ -168,6 +176,12 @@ public class Main extends Activity {
       return true;
     }
     
+    //check for hte login screen and send intent if necessary
+    public void start_loginActivity(View view) {
+    	check = 2;
+    	Intent intent = new Intent(this, LoginActivity.class);
+    	startActivity(intent);
+    }
     
 
 

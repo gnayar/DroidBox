@@ -6,6 +6,7 @@
     <string name="title_activity_main">Droidbox</string>
     <string name="title_activity_main2">MainActivity</string>
     <string name="title_activity_music_library">MusicLibrary</string>
+    <string name="title_activity_login">LoginActivity</string>
     
     <string name="add_queue">Add to Now Playing</string>
 
