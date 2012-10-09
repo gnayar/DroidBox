@@ -31,24 +31,24 @@ public class ReadFile {
 			//Toast.makeText(context, "file found", Toast.LENGTH_SHORT).show();
 
 			//for debugging - trying to check if reading sync code correctly.
-			newSyncCode1 = reader.readLine();
+			//newSyncCode1 = reader.readLine();
 			//Toast.makeText(context, "read int: "+newSyncCode1+"b", Toast.LENGTH_SHORT).show();
-			int newSyncCode = Integer.parseInt(newSyncCode1); //first read new sync code and convert to int
+			//int newSyncCode = Integer.parseInt(newSyncCode1); //first read new sync code and convert to int
 			//Toast.makeText(context, "sync check", Toast.LENGTH_SHORT).show();
-			if(currentSyncCode == newSyncCode) {
-				synced = true;
-				//exit
-			}
-			else {
+			//if(currentSyncCode == newSyncCode) {
+			//	synced = true;
+			//	//exit
+			//}
+			//else {
 				//library needs to be updated
 				//how can I tell the file is done? there is no hasNext() ??
 				Toast.makeText(context, "updating", Toast.LENGTH_SHORT).show();
 				while( (artist = reader.readLine()) != null) {
 					album = reader.readLine();
 					song = reader.readLine();
-					songs.add(new Song(artist, album, song));
+					songs.add(new Song(artist, album, song, 0)); //needs to be changed to account for ID's
 					Toast.makeText(context, "added", Toast.LENGTH_SHORT).show();
-				}
+				//}
 			}
 			//in.close(); //close the buffer
 			reader.close();

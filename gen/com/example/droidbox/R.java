@@ -783,8 +783,9 @@ containing a value of this type.
         public static final int abs__tab_selected_holo=0x7f020052;
         public static final int abs__tab_selected_pressed_holo=0x7f020053;
         public static final int abs__tab_unselected_pressed_holo=0x7f020054;
-        public static final int ic_action_search=0x7f020055;
-        public static final int ic_launcher=0x7f020056;
+        public static final int droidbox=0x7f020055;
+        public static final int ic_action_search=0x7f020056;
+        public static final int ic_launcher=0x7f020057;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040022;
@@ -816,7 +817,7 @@ containing a value of this type.
         public static final int abs__title=0x7f04001b;
         public static final int abs__titleDivider=0x7f04001c;
         public static final int abs__up=0x7f04000b;
-        public static final int add_queue=0x7f04002d;
+        public static final int addQueue=0x7f04002d;
         public static final int album=0x7f04002c;
         public static final int artist=0x7f04002b;
         public static final int button1=0x7f040028;

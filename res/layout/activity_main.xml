@@ -7,18 +7,18 @@
     <ListView
         android:id="@+id/song_list"
         android:layout_width="fill_parent"
-        android:layout_height="354dp"
-        android:layout_weight="9"
-        android:paddingTop="20sp" 
->
+        android:layout_height="301dp"
+        android:layout_weight="0.57"
+        android:paddingTop="20sp" >
+
     </ListView>
 
     <Button
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_weight="3"
-        android:text="@string/music_library"
-        android:onClick="goToLibrary" />
-    
+        android:layout_weight="0.49"
+        android:onClick="goToLibrary"
+        android:text="@string/music_library" />
+
 </LinearLayout>
