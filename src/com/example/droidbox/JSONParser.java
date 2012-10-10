@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -39,8 +40,8 @@ public class JSONParser {
     // function get json from url
     // by making HTTP POST or GET mehtod
     public JSONObject makeHttpRequest(String url, String method,
-            List<NameValuePair> params) {
-    
+            List<NameValuePair> params, String ID) {
+    	
         // Making HTTP request
         try {
  
@@ -48,8 +49,13 @@ public class JSONParser {
             if(method == "POST"){
                 // request method is POST
                 // defaultHttpClient
+            	
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
+                if(!ID.equals("0")) {
+                	BasicNameValuePair baker = new BasicNameValuePair("songID",ID);
+                	params.add(baker);
+                }
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
                 Log.v("HTTP URL", httpPost.getURI().toString());
                 HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -95,7 +101,11 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("http Error", "3 " + e.toString());
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	Log.e("http Error", "4" + e.toString());
         }
+       
  
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -134,7 +144,7 @@ public class JSONParser {
     	final String TAG_SONGS = "songs";
     	
     	JSONArray songsJSON = null;
-    	JSONParser jParser = new JSONParser();
+    	//JSONParser jParser = new JSONParser();
     	
     	
     	try {
@@ -146,7 +156,7 @@ public class JSONParser {
     			String album = c.getString(TAG_ALBUM);
     			String title = c.getString(TAG_TITLE);
     			String id = c.getString(TAG_ID);
-    			creation.add(new Song(artist,album,title, Integer.valueOf(id)));
+    			creation.add(new Song(artist,title,album, id));
     			
     		}
     	} catch (JSONException e) {

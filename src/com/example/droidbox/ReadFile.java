@@ -44,9 +44,10 @@ public class ReadFile {
 				//how can I tell the file is done? there is no hasNext() ??
 				Toast.makeText(context, "updating", Toast.LENGTH_SHORT).show();
 				while( (artist = reader.readLine()) != null) {
-					album = reader.readLine();
 					song = reader.readLine();
-					songs.add(new Song(artist, album, song, 0)); //needs to be changed to account for ID's
+					album = reader.readLine();
+					String ID = reader.readLine();
+					songs.add(new Song(artist, song, album, ID)); //needs to be changed to account for ID's
 					Toast.makeText(context, "added", Toast.LENGTH_SHORT).show();
 				//}
 			}

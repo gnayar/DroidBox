@@ -1,11 +1,11 @@
 package com.example.droidbox;
 
+import java.io.File;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -22,11 +22,23 @@ public class MusicLibrary extends SherlockFragmentActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		
+		Context context = this;
 		this.setTheme(R.style.Theme_Sherlock_Light);
 		//addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
+		
+     	File file = this.getFileStreamPath("update.txt");
+     	if(!file.exists()){
+     		testFileWriter t = new testFileWriter(context);
+     	}
+     	
+		File myDir = new File(context.getFilesDir().getAbsolutePath());
+		ReadFile scan = new ReadFile();
+		songs = scan.read(myDir,"/update.txt",this);
+
+		
+		
 		super.onCreate(savedInstanceState);
-		Context context = this;
+		
 
 
 		viewPager = new ViewPager(this);
@@ -80,7 +92,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 	
 	public void sendSongToMain() {
 		  Intent intent = new Intent(this, Main.class);
-		  intent.putExtra(Main.ID,current.getID());
+		  intent.putExtra(Main.ID, String.valueOf(current.getID()));
 		  intent.putExtra(Main.ALBUM_NAME, current.getAlbum());
 		  intent.putExtra(Main.ARTIST_NAME, current.getArtist());
 		  intent.putExtra(Main.SONG_NAME, current.getTitle());
@@ -90,15 +102,15 @@ public class MusicLibrary extends SherlockFragmentActivity
 	
 
 	
-	public void addSongs(){
-		songs.add(new Song("song 1","g","h", 15));
-        songs.add(new Song("song 2","e","g", 16));
-       	songs.add(new Song("song 3","d","f", 17));
-       	songs.add(new Song("song 4","a","e",19));
-       	songs.add(new Song("song 5","c","d", 18));
-       	songs.add(new Song("song 6","b","c", 13));
-       	songs.add(new Song("song 7","f","b", 6));
-       	songs.add(new Song("song 8","h","a", 125));
-	}
+//	public void addSongs(){
+//		songs.add(new Song("song 1","g","h", 15));
+//        songs.add(new Song("song 2","e","g", 16));
+//       	songs.add(new Song("song 3","d","f", 17));
+//       	songs.add(new Song("song 4","a","e",19));
+//       	songs.add(new Song("song 5","c","d", 18));
+//       	songs.add(new Song("song 6","b","c", 13));
+//       	songs.add(new Song("song 7","f","b", 6));
+//       	songs.add(new Song("song 8","h","a", 125));
+//	}
 	
 }

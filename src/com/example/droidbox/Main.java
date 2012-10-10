@@ -47,8 +47,28 @@ public class Main extends Activity {
         	start_loginActivity(listViewSong);
         }
         
-        //PROBABLY SHOULDNT BE HERE
-        //songs = getLibrary();
+    	try {
+    		songs = getQueue();
+	
+    	} catch (Exception e) {
+    		try {
+    			songs = getQueue();
+
+    		}
+    		catch (Exception m) {
+    			try {
+    				songs = getQueue();
+    			} catch(Exception n) {
+    				Log.e("JSON Parser", "not connecting to data");
+
+    			}
+    			
+    		}
+    		
+    		
+        	
+    	}
+        
         
         
         setContentView(R.layout.activity_main);
@@ -58,7 +78,7 @@ public class Main extends Activity {
         ID = "ID";
         
         
-		
+//		
 //     	file = this.getFileStreamPath("update.txt");
 //     	if(!file.exists()){
 //     		testFileWriter t = new testFileWriter(context);
@@ -78,9 +98,9 @@ public class Main extends Activity {
 //		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
 //		//toast.show();
 //		}    
-// 		
-        
-        songs.add(new Song("not json", "not json", "sdfsd", 2131));
+ 		
+      
+        //songs.add(new Song("not json", "not json", "sdfsd", 2131));
 
         listViewSong = (ListView)findViewById(R.id.song_list);
         SongListAdapter adapter = new SongListAdapter(context, R.layout.song_row_item, songs);
@@ -108,18 +128,20 @@ public class Main extends Activity {
     public void onResume() {
     	super.onResume();
         //get songs from user selections in the Music Library
-        int songID = getIntent().getIntExtra(ID, 0);
+        String songID = getIntent().getStringExtra(ID);
+        //Log.v("ID", songID);
         String title = getIntent().getStringExtra(SONG_NAME);
         String artist = getIntent().getStringExtra(ARTIST_NAME);
         String album = getIntent().getStringExtra(ALBUM_NAME);
+        String url = "http://9.12.10.1/db-wa/requestSong.php";
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	songs.add(new Song(artist, title, album, ID));
+    	//adding parameters to send through JSON
+    	 params.add(new BasicNameValuePair("songID", "123" ));
+    	 JSONParser jParser = new JSONParser();
+    	 JSONObject json = jParser.makeHttpRequest(url, "POST", params, songID);
         
-        //double check if there is a new song to be added to the queue and if so add it to the queue (this should only happen after a user makes a selection)
-        Song current = new Song(title, artist, album, songID);
-        if(songID != 0) {
-        	songs.add(current);
-        }
-        testFileWriter writeLibrary = new testFileWriter();
-    	writeLibrary.update(this,songs);
+    	 updateQueue();
 
         //TODO: cannot add more than one song! won't update the array properly.  not sure what's wrong
         
@@ -141,14 +163,36 @@ public class Main extends Activity {
     
     public void onDestroy() {
     	super.onDestroy();
-    	file.delete();
-    	myDir.delete();
+    	//file.delete();
+    	//myDir.delete();
     }
     
     public void goToLibrary(View view){
     	//where the JSON should start to get the music library
-    	
-    	
+    	try {
+    		songs = getLibrary();
+    		testFileWriter writeLibrary = new testFileWriter();
+        	writeLibrary.update(this,songs);	
+    	} catch (Exception e) {
+    		try {
+    			songs = getLibrary();
+    			testFileWriter writeLibrary = new testFileWriter();
+            	writeLibrary.update(this,songs);	
+    		}
+    		catch (Exception m) {
+    			try {
+    				songs = getLibrary();
+    			} catch(Exception n) {
+    				Log.e("JSON Parser", "not connecting to data");
+    				testFileWriter writeLibrary = new testFileWriter();
+    	        	writeLibrary.update(this,songs);	
+    			}
+    			
+    		}
+    		
+    		
+        	
+    	}
     	
     	
     	
@@ -207,11 +251,11 @@ public class Main extends Activity {
     	
         // getting JSON string from URL
     	String url = "http://9.12.10.1/db-wa/getLibrary.php";
-        JSONObject json = jParser.makeHttpRequest(url, "POST", params);
-       
+        JSONObject json = jParser.makeHttpRequest(url, "POST", params, "0");
+        
         try
         {
-			test = json.getString("message");
+			test = json.getString("songs");
 		} 
         
         catch (Exception e) 
@@ -224,15 +268,68 @@ public class Main extends Activity {
  
         int duration = Toast.LENGTH_SHORT;
 
-        Toast toast = Toast.makeText(context, "toast is: " + test, duration);
+        Toast toast = Toast.makeText(context, "downloaded", duration);
         toast.show();
         
         return jParser.createList(json);
     }
 
-
-
+    public SongList getQueue() 
+    {
     	
+    	String test = "nothing";
+    	
+    	JSONParser jParser = new JSONParser();
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	
+    	//adding parameters to send through JSON
+    	 params.add(new BasicNameValuePair("songID", "123" ));
+    	
+        // getting JSON string from URL
+    	String url = "http://9.12.10.1/db-wa/getQueue.php";
+        JSONObject json = jParser.makeHttpRequest(url, "POST", params, "0");
+        
+        try
+        {
+			test = json.getString("songs");
+		} 
+        
+        catch (Exception e) 
+        {
+			// TODO Auto-generated catch block
+	        Log.e("json excep: ", e.toString());
+		}
+     
+        Context context = getApplicationContext();
+ 
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, "downloaded", duration);
+        toast.show();
+        
+        return jParser.createList(json);
+    }
+
+    public void updateQueue() {
+    	try {
+    		songs = getQueue();
+	
+    	} catch (Exception e) {
+    		try {
+    			songs = getQueue();
+
+    		}
+    		catch (Exception m) {
+    			try {
+    				songs = getQueue();
+    			} catch(Exception n) {
+    				Log.e("JSON Parser", "not connecting to data");
+
+    			}
+    			
+    		}
+    	}
+    }
     
 }
 

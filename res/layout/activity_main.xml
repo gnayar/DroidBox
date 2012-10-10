@@ -19,6 +19,14 @@
         android:layout_height="25dp"
         android:layout_weight="0.49"
         android:onClick="goToLibrary"
-        android:text="@string/music_library" />
+        android:text="Go to Library" />
+    
+        <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight="0.49"
+        android:onClick="updateQueue"
+        android:text="Refresh" />
 
 </LinearLayout>

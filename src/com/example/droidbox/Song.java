@@ -4,15 +4,15 @@ public class Song {
 	private String title;
 	private String artist;
 	private String album;
-	private int ID;
+	private String ID;
 	
 	public Song() {
 		title = "";
 		artist = "";
 		album = "";
-		ID = 0;
+		ID = "";
 	}
-	public Song(String title, String artist, String album, int ID) {
+	public Song(String artist, String title, String album, String ID) {
 		super();
 		this.title = title;
 		this.artist = artist;
@@ -37,10 +37,10 @@ public class Song {
 	public void setAlbum(String album) {
 		this.album = album;
 	}
-	public int getID() {
+	public String getID() {
 		return ID;		
 	}
-	public void setID(int ID) {
+	public void setID(String ID) {
 		this.ID = ID;
 	}
 	

@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 public class testFileWriter {
@@ -42,8 +43,11 @@ public class testFileWriter {
 		try {
 			write = new FileWriter(myDir + "/update.txt");
 			for(int i = 0; i < queue.size(); i++ ){
-				write.write(queue.get(i).getArtist() + "\n" + queue.get(i).getTitle() + "\n" + queue.get(i).getAlbum() + "\n");
-				Toast.makeText(context, queue.get(0).getTitle(), 15);
+				write.write(queue.get(i).getArtist() + "\n" + queue.get(i).getTitle() + "\n" + queue.get(i).getAlbum() + "\n" + queue.get(i).getID() + "\n");
+				Log.v("artist", queue.get(i).getArtist());
+				Log.v("title", queue.get(i).getTitle());
+				Log.v("album", queue.get(i).getAlbum());
+
 			}	
 			write.close();
 			Toast.makeText(context, "file created", Toast.LENGTH_SHORT).show();
