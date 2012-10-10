@@ -1,11 +1,18 @@
 package com.example.droidbox;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -15,7 +22,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.Toast;
 //@SuppressLint("NewApi")
 public class Main extends Activity {
@@ -36,10 +42,13 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+        songs = new SongList();
         if(check == 1) {
         	start_loginActivity(listViewSong);
         }
+        
+        //PROBABLY SHOULDNT BE HERE
+        //songs = getLibrary();
         
         
         setContentView(R.layout.activity_main);
@@ -47,30 +56,31 @@ public class Main extends Activity {
 //		File file = new File(path, "update.txt");
         //
         ID = "ID";
-        //songs = new SongList();
+        
         
 		
-     	file = this.getFileStreamPath("update.txt");
-     	if(!file.exists()){
-     		testFileWriter t = new testFileWriter(context);
-     	}
-     	
-		myDir = new File(context.getFilesDir().getAbsolutePath());
-		ReadFile scan = new ReadFile();
-		songs = scan.read(myDir,"/update.txt",this);
-		if(scan.isSynced() == false) {
-			CharSequence updatedText = scan.getNewSyncCode();
-		
-		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-		//toast.show();
-		}
-		else {
-			CharSequence updatedText = scan.getNewSyncCode();
-		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
-		//toast.show();
-		}    
- 	
-
+//     	file = this.getFileStreamPath("update.txt");
+//     	if(!file.exists()){
+//     		testFileWriter t = new testFileWriter(context);
+//     	}
+//     	
+//		myDir = new File(context.getFilesDir().getAbsolutePath());
+//		ReadFile scan = new ReadFile();
+//		songs = scan.read(myDir,"/update.txt",this);
+//		if(scan.isSynced() == false) {
+//			CharSequence updatedText = scan.getNewSyncCode();
+//		
+//		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+//		//toast.show();
+//		}
+//		else {
+//			CharSequence updatedText = scan.getNewSyncCode();
+//		//Toast toast = Toast.makeText(this, updatedText, Toast.LENGTH_LONG);
+//		//toast.show();
+//		}    
+// 		
+        
+        songs.add(new Song("not json", "not json", "sdfsd", 2131));
 
         listViewSong = (ListView)findViewById(R.id.song_list);
         SongListAdapter adapter = new SongListAdapter(context, R.layout.song_row_item, songs);
@@ -183,6 +193,43 @@ public class Main extends Activity {
     	startActivity(intent);
     }
     
+    
+    public SongList getLibrary() 
+    {
+    	
+    	String test = "nothing";
+    	
+    	JSONParser jParser = new JSONParser();
+    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+    	
+    	//adding parameters to send through JSON
+    	 params.add(new BasicNameValuePair("songID", "123" ));
+    	
+        // getting JSON string from URL
+    	String url = "http://9.12.10.1/db-wa/getLibrary.php";
+        JSONObject json = jParser.makeHttpRequest(url, "POST", params);
+       
+        try
+        {
+			test = json.getString("message");
+		} 
+        
+        catch (Exception e) 
+        {
+			// TODO Auto-generated catch block
+	        Log.e("json excep: ", e.toString());
+		}
+     
+        Context context = getApplicationContext();
+ 
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, "toast is: " + test, duration);
+        toast.show();
+        
+        return jParser.createList(json);
+    }
+
 
 
     	

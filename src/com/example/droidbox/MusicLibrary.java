@@ -22,8 +22,9 @@ public class MusicLibrary extends SherlockFragmentActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		
 		this.setTheme(R.style.Theme_Sherlock_Light);
-		addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
+		//addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
 		super.onCreate(savedInstanceState);
 		Context context = this;
 

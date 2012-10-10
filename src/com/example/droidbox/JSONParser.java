@@ -19,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -122,5 +123,40 @@ public class JSONParser {
         // return JSON String
         return jObj;
  
+    }
+    
+    public SongList createList(JSONObject o) {
+    	SongList creation = new SongList();
+    	final String TAG_ARTIST = "artist";
+    	final String TAG_ALBUM = "album";
+    	final String TAG_TITLE = "title";
+    	final String TAG_ID = "id";
+    	final String TAG_SONGS = "songs";
+    	
+    	JSONArray songsJSON = null;
+    	JSONParser jParser = new JSONParser();
+    	
+    	
+    	try {
+    		songsJSON = o.getJSONArray(TAG_SONGS);
+    		
+    		for(int i = 0; i < songsJSON.length(); i++) {
+    			JSONObject c = songsJSON.getJSONObject(i);
+    			String artist = c.getString(TAG_ARTIST);
+    			String album = c.getString(TAG_ALBUM);
+    			String title = c.getString(TAG_TITLE);
+    			String id = c.getString(TAG_ID);
+    			creation.add(new Song(artist,album,title, Integer.valueOf(id)));
+    			
+    		}
+    	} catch (JSONException e) {
+    		e.printStackTrace();
+    	}
+    	
+
+    	return creation;
+    	
+    	
+    	
     }
 }
