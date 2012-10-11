@@ -43,9 +43,6 @@ public class Main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songs = new SongList();
-        if(check == 1) {
-        	start_loginActivity(listViewSong);
-        }
         
     	try {
     		songs = getQueue();
@@ -230,12 +227,7 @@ public class Main extends Activity {
       return true;
     }
     
-    //check for hte login screen and send intent if necessary
-    public void start_loginActivity(View view) {
-    	check = 2;
-    	Intent intent = new Intent(this, LoginActivity.class);
-    	startActivity(intent);
-    }
+   
     
     
     public SongList getLibrary() 

@@ -26,7 +26,8 @@ public class LoginActivity extends Activity {
     }
     public void Authenticate(View view)
     {
-    	finish();//goes to main screen AND users can't "back" into this login screen again
+    	Intent intent = new Intent(this, Main.class);
+    	startActivity(intent);//goes to main screen AND users can't "back" into this login screen again
     }
     
     public void onBackPressed() {
