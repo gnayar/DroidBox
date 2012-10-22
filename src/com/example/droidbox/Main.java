@@ -43,7 +43,13 @@ public class Main extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         songs = new SongList();
-        
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
+        songs.add(new Song("Title","Artist","Album", "4"));
     	try {
     		songs = getQueue();
 	

@@ -22,12 +22,14 @@ public class LoginActivity extends Activity {
     
     public void KillApp(View view)
     {
+    	finish();
     	//close the application...somehow
     }
     public void Authenticate(View view)
     {
     	Intent intent = new Intent(this, Main.class);
-    	startActivity(intent);//goes to main screen AND users can't "back" into this login screen again
+    	startActivity(intent);
+    	finish();//goes to main screen AND users can't "back" into this login screen again
     }
     
     public void onBackPressed() {
