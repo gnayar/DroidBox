@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -22,6 +24,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		
 		Context context = this;
 		this.setTheme(R.style.Theme_Sherlock_Light);
 		//addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
@@ -45,6 +48,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 		viewPager.setId(R.id.pager);
 
 		setContentView(viewPager);
+		//viewPager.setId(R.id.pager);
 		ActionBar bar = getSupportActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -100,7 +104,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 		  
 	}
 	
-
+	
 	
 //	public void addSongs(){
 //		songs.add(new Song("song 1","g","h", 15));

@@ -10,5 +10,7 @@
     <string name="add_queue">Add to Now Playing</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_splashscreen">MainActivity</string>
+    <string name="title_activity_searchable">SearchableActivity</string>
+    <string name="Search">Search</string>
 
 </resources>

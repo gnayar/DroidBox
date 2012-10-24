@@ -212,6 +212,20 @@ public class Main extends Activity {
         return true;
     }
     
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                
+                return true;
+            case R.id.search:
+            	 onSearchRequested();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    
     //creates a long press menu. so now you can long press and a menu pops up: will be to add songs to queue
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo) {
     	super.onCreateContextMenu(menu, view, menuInfo);
