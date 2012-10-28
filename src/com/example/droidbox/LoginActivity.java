@@ -42,10 +42,10 @@ public class LoginActivity extends Activity {
     	EditText pass = (EditText) findViewById(R.id.editText2);//getting the password
     	String tablePassword = pass.getText().toString();
     	
-    	EditText num = (EditText) findViewById(R.id.EditText01);//getting the table number
+    	EditText num = (EditText) findViewById(R.id.editText0);//getting the table number
     	String tableNumber = num.getText().toString();
     	
-    	EditText nick = (EditText) findViewById(R.id.editText1);//getting the table number
+    	EditText nick = (EditText) findViewById(R.id.editText1);//getting the table nickname
     	String nickname = nick.getText().toString();
     	
     	communicate( tablePassword, tableNumber, nickname);//passing parameters to helper method communicate
