@@ -60,14 +60,4 @@
         android:onClick="Authenticate"
         android:text="Login" />
 
-    <EditText
-        android:id="@+id/EditText01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_below="@+id/editText2"
-        android:ems="10"
-        android:hint="Enter Table Num"
-        android:inputType="textPassword" />
-
 </RelativeLayout>
