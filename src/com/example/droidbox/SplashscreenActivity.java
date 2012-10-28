@@ -12,7 +12,7 @@ import android.view.Menu;
 
 public class SplashscreenActivity extends Activity {
 	private long splashDelay = 10;
-	boolean alreadyLogged = false;
+	static boolean alreadyLogged = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
