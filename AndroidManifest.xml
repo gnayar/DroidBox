@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Main"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" >
             <meta-data android:name="android.app.default_searchable"
 	                   android:value=".SearchableActivity" />
             <intent-filter>
@@ -28,7 +29,8 @@
         </activity>
         <activity
             android:name=".MusicLibrary"
-            android:label="@string/title_activity_music_library" >
+            android:label="@string/title_activity_music_library"
+            android:screenOrientation="portrait" >
             <meta-data android:name="android.app.default_searchable"
 	                   android:value=".SearchableActivity" />
             <intent-filter>
@@ -39,7 +41,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.LOGIN" />
 
@@ -48,7 +51,8 @@
         </activity>
         <activity
             android:name=".SplashscreenActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +61,8 @@
    		</activity>
    		
         <activity android:name=".SearchableActivity"
-          android:launchMode="singleTop" >
+          android:launchMode="singleTop"
+          android:screenOrientation="portrait" >
         	<intent-filter>
             	<action android:name="android.intent.action.SEARCH" />
        		</intent-filter>

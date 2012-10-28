@@ -16,8 +16,6 @@ public class SplashscreenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar = getActionBar();
-        actionBar.hide();
         setContentView(R.layout.splashscreen);
         TimerTask task = new TimerTask(){
         	@Override
