@@ -5,19 +5,17 @@ import java.io.File;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
 public class MusicLibrary extends SherlockFragmentActivity
 {
 
-
-	ViewPager viewPager;
-	TabsAdapter tabsAdapter;
 	Song current;
 	SongList songs = new SongList();
 	
@@ -38,54 +36,39 @@ public class MusicLibrary extends SherlockFragmentActivity
 		ReadFile scan = new ReadFile();
 		songs = scan.read(myDir,"/update.txt",this);
 
-		
-		
+		addSongs();
 		super.onCreate(savedInstanceState);
-		
+        setContentView(R.layout.main);
 
+         MusicAdapter mAdapter = new MusicAdapter(getSupportFragmentManager());
+         mAdapter.recieveSong(songs);
+        
+         FragmentStatePagerAdapter adapter = (FragmentStatePagerAdapter) mAdapter;
+        
+        ViewPager pager = (ViewPager)findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        
 
-		viewPager = new ViewPager(this);
-		viewPager.setId(R.id.pager);
-
-		setContentView(viewPager);
-		//viewPager.setId(R.id.pager);
-		ActionBar bar = getSupportActionBar();
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		tabsAdapter = new TabsAdapter(this, viewPager);
-		
-		tabsAdapter.addTab(
-				bar.newTab().setText("Title"),
-				FragmentOne.class, null);
-		tabsAdapter.addTab(
-				bar.newTab()
-						.setText("Artist"),
-				FragmentTwo.class, null);
-		tabsAdapter.addTab(
-				bar.newTab()
-						.setText("Album"),
-				FragmentThree.class, null);
-		if(savedInstanceState != null){
-			bar.setSelectedNavigationItem(savedInstanceState.getInt("tab",0));
-		}
-		//Toast.makeText(context, current.getArtist(), 15).show();
+        TitlePageIndicator indicator = (TitlePageIndicator)findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+        pager.setCurrentItem(1);
+        indicator.setCurrentItem(1);
+        //Colors
+        final float density = getResources().getDisplayMetrics().density;
+        indicator.setBackgroundColor(0xFFC0C0C0);
+        indicator.setFooterColor(0xFFC0C0C0);
+        indicator.setFooterLineHeight(1 * density); //1dp
+        indicator.setFooterIndicatorHeight(3 * density); //3dp
+        indicator.setFooterIndicatorStyle(IndicatorStyle.Underline);
+        indicator.setTextColor(0xAA000000);
+        indicator.setSelectedColor(0xFF000000);
+        indicator.setSelectedBold(true);
+        
+        
+        
 
 	}
-	
-	public SongList getSongsTitleSort(){
-	
-		return songs.sortByTitle();
-	}
-	public SongList getSongsArtistSort(){
-	
-		return songs.sortByArtist();
-	}
-	public SongList getSongsAlbumSort(){
-	
-		return songs.sortByAlbum();
-	}
-	
-	
 	public void setCurrentSong(Song song) {
 		current = song;
 	}
@@ -106,15 +89,15 @@ public class MusicLibrary extends SherlockFragmentActivity
 	
 	
 	
-//	public void addSongs(){
-//		songs.add(new Song("song 1","g","h", 15));
-//        songs.add(new Song("song 2","e","g", 16));
-//       	songs.add(new Song("song 3","d","f", 17));
-//       	songs.add(new Song("song 4","a","e",19));
-//       	songs.add(new Song("song 5","c","d", 18));
-//       	songs.add(new Song("song 6","b","c", 13));
-//       	songs.add(new Song("song 7","f","b", 6));
-//       	songs.add(new Song("song 8","h","a", 125));
-//	}
+	public void addSongs(){
+		songs.add(new Song("song 1","g","h", "15"));
+        songs.add(new Song("song 2","e","g", "16"));
+       	songs.add(new Song("song 3","d","f", "17"));
+       	songs.add(new Song("song 4","a","e","19"));
+       	songs.add(new Song("song 5","c","d", "18"));
+       	songs.add(new Song("song 6","b","c", "13"));
+       	songs.add(new Song("song 7","f","b", "6"));
+       	songs.add(new Song("song 8","h","a", "125"));
+	}
 	
 }

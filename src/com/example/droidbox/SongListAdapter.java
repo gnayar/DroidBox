@@ -17,7 +17,7 @@ public class SongListAdapter extends ArrayAdapter<Song> {
 	private LayoutInflater inflater;
 	private Context context;
 	public SongListAdapter(Context ctx, int textViewResourceId,
-			List<Song> objects) {
+			SongList objects) {
 		super(ctx, textViewResourceId, objects);
 		this.resource = textViewResourceId;
 		this.inflater = LayoutInflater.from(ctx);

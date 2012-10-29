@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 
 
@@ -16,38 +15,45 @@ public class FragmentThree extends ListFragment
 	
 	Song temp;
 	
-	 @Override
-	    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-	       	View test = super.onCreateView(inflater, container, savedInstanceState);
-			SongList songs = ((MusicLibrary)getActivity()).getSongsAlbumSort();
+	public static FragmentThree newInstance(String content){
+		FragmentThree fragment = new FragmentThree();
+		return fragment;
+	}
+	
+	public  SongList songs = new SongList();
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState){
+		super.onCreate(savedInstanceState);
+	}
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+       	View test = super.onCreateView(inflater, container, savedInstanceState);
+       	
+		SongList song3 = new SongList();
+		for(int i = 0;i<songs.size();i++ ){
+			song3.add(songs.get(i));
+		}
+		song3.sortByAlbum();
+		
+		setListAdapter(new SongListAdapter(inflater.getContext(),R.layout.song_row_item,song3));
 
-	       	//songs.sortByTitle();
-			
-		 	/** Creating an array adapter to store the list of countries **/
-	        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(inflater.getContext(), android.R.layout.simple_list_item_1,FRUITS);
-	 
-	        /** Setting the list adapter for the ListFragment */
-	        setListAdapter(new SongListAdapter(inflater.getContext(),R.layout.song_row_item,songs));
-
-	        return test;
-	    }
+        return test;
+    }
 
 	@Override
 	public void onListItemClick (ListView l, View v, int position, long id) {
 		Context context = (MusicLibrary)getActivity();
 		Song song = (Song) l.getItemAtPosition(position);
 		temp = song;
-		((MusicLibrary)getActivity()).setCurrentSong(temp);
-		((MusicLibrary)getActivity()).sendSongToMain();
-		//Toast.makeText(context, temp.getID(), 15).show();
+		((MusicLibrary) context).setCurrentSong(temp);
+		((MusicLibrary) context).sendSongToMain();
+	
 		
 	}
 
 	public Song getSong() {
 		return temp;
-	}
-
-
-
-	
+	}	
 }
