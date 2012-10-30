@@ -18,7 +18,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 //uses up navigation in the manifest, should be changed later so users can't go back to the queue without signing in
 public class LoginActivity extends Activity {
- 
+	
+	public static String tableNumber;
+	public static String tablePasscode;
+	public static String tableNickname;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +42,18 @@ public class LoginActivity extends Activity {
     }
     public void Authenticate(View view)
     {
-    	
-    	EditText pass = (EditText) findViewById(R.id.editText2);//getting the password
-    	String tablePassword = pass.getText().toString();
-    	
+
     	EditText num = (EditText) findViewById(R.id.editText0);//getting the table number
     	String tableNumber = num.getText().toString();
+    	this.tableNumber = tableNumber;
     	
     	EditText nick = (EditText) findViewById(R.id.editText1);//getting the table nickname
     	String nickname = nick.getText().toString();
+    	this.tableNickname = nickname;
     	
+    	EditText pass = (EditText) findViewById(R.id.editText2);//getting the password
+    	String tablePassword = pass.getText().toString();
+    	this.tablePasscode = tablePassword;
     	communicate( tablePassword, tableNumber, nickname);//passing parameters to helper method communicate
     	
     	
@@ -59,22 +65,25 @@ public class LoginActivity extends Activity {
     
     public void communicate( String tablePassword, String tableNumber, String nickname) 
     {
+    	/*
     	String test = "nothing";
     	
     	JSONParser jParser = new JSONParser();
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
     	
     	//adding parameters to send through JSON
-    	 params.add(new BasicNameValuePair(tableNumber, tablePassword ));
-    	
+    	 params.add(new BasicNameValuePair("t_num", tableNumber ));
+    	 params.add(new BasicNameValuePair("t_code", tablePassword ));
+    	 
         // sending parameters through JSON
-    	String url = "http://9.12.10.1/db-wa/getQueue.php";
+    	String url = "http://9.12.10.1/";
         JSONObject json = jParser.makeHttpRequest(url, "POST", params, "0");
         
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, "authenticated", duration);
         toast.show();
+        */
     }
     
     public void onBackPressed() {

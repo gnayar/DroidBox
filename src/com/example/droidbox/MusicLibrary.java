@@ -36,7 +36,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 		ReadFile scan = new ReadFile();
 		songs = scan.read(myDir,"/update.txt",this);
 
-		addSongs();
+		//addSongs();
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 

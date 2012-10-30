@@ -31,7 +31,7 @@ public class Main extends Activity {
 	public Song pickedSong;
 	public Intent intent;
 	public static String ID, ALBUM_NAME, ARTIST_NAME, SONG_NAME;
-	public SongList songs;
+	static public SongList songs = new SongList();
 	public File file, myDir;
 	public testFileWriter t1;
 	//JSON
@@ -42,35 +42,7 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        songs = new SongList();
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-//        songs.add(new Song("Title","Artist","Album", "4"));
-    	try {
-    		songs = getQueue();
-	
-    	} catch (Exception e) {
-    		try {
-    			songs = getQueue();
-
-    		}
-    		catch (Exception m) {
-    			try {
-    				songs = getQueue();
-    			} catch(Exception n) {
-    				Log.e("JSON Parser", "not connecting to data");
-
-    			}
-    			
-    		}
-    		
-    		
-        	
-    	}
+    	updateQueue();
         
         
         
@@ -108,8 +80,8 @@ public class Main extends Activity {
         listViewSong = (ListView)findViewById(R.id.song_list);
         SongListAdapter adapter = new SongListAdapter(context, R.layout.song_row_item, songs);
         listViewSong.setAdapter(adapter);
-    	testFileWriter writeLibrary = new testFileWriter();
-    	writeLibrary.update(this,songs);
+    	//testFileWriter writeLibrary = new testFileWriter();
+    	//writeLibrary.update(this,songs);
         
         //allows a short click on a list item when set to TRUE
         listViewSong.setClickable(true);
@@ -138,7 +110,7 @@ public class Main extends Activity {
         String album = getIntent().getStringExtra(ALBUM_NAME);
         String url = "http://9.12.10.1/db-wa/requestSong.php";
     	List<NameValuePair> params = new ArrayList<NameValuePair>();
-    	songs.add(new Song(artist, title, album, ID));
+    	//songs.add(new Song(artist, title, album, ID));
     	//adding parameters to send through JSON
     	 params.add(new BasicNameValuePair("songID", "123" ));
     	 JSONParser jParser = new JSONParser();
@@ -172,21 +144,22 @@ public class Main extends Activity {
     
     public void goToLibrary(View view){
     	//where the JSON should start to get the music library
+    	SongList temp = new SongList();
     	try {
-    		songs = getLibrary();
+    		temp = getLibrary();
     		testFileWriter writeLibrary = new testFileWriter();
-        	writeLibrary.update(this,songs);	
+        	writeLibrary.update(this,temp);	
     	} catch (Exception e) {
     		try {
-    			songs = getLibrary();
+    			temp = getLibrary();
     			testFileWriter writeLibrary = new testFileWriter();
-            	writeLibrary.update(this,songs);	
+            	writeLibrary.update(this,temp);	
     		}
     		catch (Exception m) {
     			try {
-    				songs = getLibrary();
+    				temp = getLibrary();
     				testFileWriter writeLibrary = new testFileWriter();
-    	        	writeLibrary.update(this,songs);	
+    	        	writeLibrary.update(this,temp);	
     			} catch(Exception n) {
     				Log.e("JSON Parser", "not connecting to data");
 
@@ -322,6 +295,9 @@ public class Main extends Activity {
         
         return jParser.createList(json);
     }
+    public void buttonRefresh(View view){
+    	updateQueue();
+    }
 
     public void updateQueue() {
     	try {
@@ -342,6 +318,7 @@ public class Main extends Activity {
     			
     		}
     	}
+  
     }
     
 }

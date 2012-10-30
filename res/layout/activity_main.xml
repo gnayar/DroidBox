@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="25dp"
         android:layout_weight="0.49"
-        android:onClick="updateQueue"
+        android:onClick="buttonRefresh"
         android:text="Refresh" />
 
 </LinearLayout>
