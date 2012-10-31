@@ -1,21 +1,11 @@
 package com.example.droidbox;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
-
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 //uses up navigation in the manifest, should be changed later so users can't go back to the queue without signing in
 public class LoginActivity extends Activity {
 	

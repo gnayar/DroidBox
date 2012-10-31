@@ -1,6 +1,7 @@
 package com.example.droidbox;
 
-import android.content.Context;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -44,16 +45,25 @@ public class FragmentOne extends ListFragment
 
 	@Override
 	public void onListItemClick (ListView l, View v, int position, long id) {
-		Context context = (MusicLibrary)getActivity();
-		Song song = (Song) l.getItemAtPosition(position);
-		temp = song;
-		((MusicLibrary) context).setCurrentSong(temp);
-		((MusicLibrary) context).sendSongToMain();
-	
 		
+		Song song = (Song) l.getItemAtPosition(position);
+		String songID = song.getID();
+        String url = "http://192.168.1.5/db-wa/requestSong.php";
+    	//songs.add(new Song(artist, title, album, ID));
+    	
+    	 JSONParser jParser = new JSONParser();
+    	 JSONObject json = new JSONObject();
+         try {
+        	((MusicLibrary)getActivity()).chosen = true;
+        	
+        	jParser.execute(url,"songID",songID);
+        	
+        	((MusicLibrary)getActivity()).sendToMain();
+        	
+ 		} catch (Exception e1) {
+ 			// TODO Auto-generated catch block
+ 			e1.printStackTrace();
+ 		} 
+         
 	}
-
-	public Song getSong() {
-		return temp;
-	}	
 }
