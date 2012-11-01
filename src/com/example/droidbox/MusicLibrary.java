@@ -5,13 +5,12 @@ import java.io.File;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.MenuInflater;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
@@ -21,11 +20,12 @@ public class MusicLibrary extends SherlockFragmentActivity
 	Song current;
 	SongList songs = new SongList();
 	boolean chosen = false;
+	Context context = this;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		
-		Context context = this;
+		
 		chosen = false;
 		this.setTheme(R.style.Theme_Sherlock_Light);
 		//addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
@@ -72,6 +72,36 @@ public class MusicLibrary extends SherlockFragmentActivity
         
 
 	}
+	
+	
+    @Override
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+    	com.actionbarsherlock.view.MenuInflater inflater = getSupportMenuInflater();
+    	   inflater.inflate(R.menu.activity_main, (com.actionbarsherlock.view.Menu) menu);
+        return true;
+    }
+    
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                
+                return true;
+            case R.id.search:
+            	Bundle b = new Bundle();
+            	b.putParcelable("library",songs);
+            	Intent intent = new Intent(this, SearchableActivity.class);
+            	intent.putExtras(b);
+            	//startActivity(intent);
+            	//startSearch(null,false,b,false);
+            	onSearchRequested();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	
 	public void setCurrentSong(Song song) {
 		current = song;
 	}
@@ -93,6 +123,12 @@ public class MusicLibrary extends SherlockFragmentActivity
 			sendToMain();
 		}
 	}
-	
+	@Override
+	public boolean onSearchRequested() {
+    	Bundle b = new Bundle();
+    	b.putParcelable("library",songs);
+    	startSearch(null, false, b, false);
+    	return true;
+	}
 	
 }

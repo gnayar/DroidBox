@@ -1,12 +1,8 @@
 package com.example.droidbox;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -21,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,7 +30,7 @@ public class Main extends Activity {
 	public Intent intent;
 	public static String ID, ALBUM_NAME, ARTIST_NAME, SONG_NAME;
 	public SongList songs = new SongList();
-	public static SongListAdapter adapter;
+	public SongListAdapter adapter;
 	public File file, myDir;
 	public testFileWriter t1;
 	//JSON
@@ -59,6 +56,7 @@ public class Main extends Activity {
         Log.v("Return", "onCreate Finished");
         //allows a short click on a list item when set to TRUE
         listViewSong.setClickable(true);
+        registerForContextMenu(listViewSong);
         //what do when setClickable == true and when an item is clicked. should pop up a menu
         listViewSong.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {              
@@ -74,8 +72,9 @@ public class Main extends Activity {
     public void onResume() {
     	super.onResume();
     	Log.v("Return", "Resumed");
-    	 updateQueue();
-    	 adapter.notifyDataSetChanged();
+    	updateQueue();
+    	adapter.setNotifyOnChange(false);
+    	adapter.notifyDataSetChanged();
         
         
     	
@@ -132,7 +131,7 @@ public class Main extends Activity {
                 
                 return true;
             case R.id.search:
-            	 onSearchRequested();
+            	onSearchRequested();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -148,23 +147,40 @@ public class Main extends Activity {
     	
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-      AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-      CharSequence title2 = item.getTitle();
-      // item ID of add to queue 2130968621
-     if(item.getItemId() == 2130968621) {
-    	 Toast.makeText(context, (CharSequence) "works", 15).show();
+    	AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+    	switch(item.getItemId()) {
+    		case R.id.vote_up:
+    			if(info.position == 0) {
+    				return false;
+    			} else {
+    				songs.moveUp(songs, info.position);
+    				//method call will be in the songlist class
+    				adapter.notifyDataSetChanged();
+    				listViewSong.requestLayout();
+    				return true;
+    				
+    			}
+    		default:
+    			return super.onContextItemSelected(item);
+    	}
 
-    	 //definitely not the best to be calling the menu item id's but couldn't find something easier
-    	  
-      }
 
-      return true;
     }
+
     
     public void buttonRefresh(View view){
-    	onResume();
-    	
+    	Log.v("Return", "Refresh");
+    	refresh();
     }
+    
+    public void refresh() {
+    	updateQueue();
+    	adapter.refreshSongs(songs);
+    	adapter.notifyDataSetChanged();
+    }
+    	
+    	
+    
     
     public SongList getLibrary() 
     {
@@ -174,7 +190,7 @@ public class Main extends Activity {
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://192.168.1.5/db-wa/getLibrary.php";
+    	String url = "http://192.168.1.103/db-wa/getLibrary.php";
     	 JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();
@@ -198,7 +214,7 @@ public class Main extends Activity {
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://192.168.1.5/db-wa/getQueue.php";
+    	String url = "http://192.168.1.103/db-wa/getQueue.php";
     	JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();
@@ -217,10 +233,12 @@ public class Main extends Activity {
     public void updateQueue() {
     	try {
     		songs = getQueue();
+    		adapter.notifyDataSetChanged();
 	
     	} catch (Exception e) {
     		try {
         		songs = getQueue();
+        		adapter.notifyDataSetChanged();
     	
         	} catch (Exception e2) {
         		

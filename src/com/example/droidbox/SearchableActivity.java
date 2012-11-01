@@ -1,18 +1,23 @@
 package com.example.droidbox;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ListView;
 
 public class SearchableActivity extends Activity {
 	private ListView listViewSongSearch;
-	SongList songs = new SongList();
+	SongList results;
+	private static SongList songs;
+	Context ctx;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_searchable);
         handleIntent(getIntent());
     }
@@ -26,22 +31,28 @@ public class SearchableActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
           String query = intent.getStringExtra(SearchManager.QUERY);
-          doMySearch(query);
+          Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
+          if(appData != null) {
+        	  songs = appData.getParcelable("library");
+          }
+          doMySearch(query,songs);
           listViewSongSearch = (ListView)findViewById(R.id.song_list);
-          SongListAdapter adapter = new SongListAdapter(getBaseContext(), R.layout.song_row_item, songs);
+          SongListAdapter adapter = new SongListAdapter(getBaseContext(), R.layout.song_row_item, results);
           listViewSongSearch.setAdapter(adapter);
         }
     }
     
-    private void doMySearch(String query) {
+    private void doMySearch(String query, SongList songs) {
 		//Insert search logic
-    	songs.add(new Song("Title1","Artist","Album", "4"));
-    	songs.add(new Song("Title2","Artist","Album", "4"));
-    	songs.add(new Song("Title3","Artist","Album", "4"));
-    	songs.add(new Song("Title4","Artist","Album", "4"));
-    	songs.add(new Song("Title5","Artist","Album", "4"));
-
-    	//add to SongList songs
+    	results = songs.searchByTitle(query);
+    	Log.v("title search", "titles have been searched");
+    	SongList temp = songs.searchByAlbum(query);
+    	for(int i = 0; i<temp.size(); i++) {
+    		results.add(temp.get(i));
+    	}
+    	if (results.get(0) == null) {
+    		results.add(new Song("nothing","is","here", "12"));
+    	}
 	}
 
 	@Override
@@ -49,4 +60,6 @@ public class SearchableActivity extends Activity {
         getMenuInflater().inflate(R.menu.activity_searchable, menu);
         return true;
     }
+	
+
 }

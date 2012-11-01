@@ -22,7 +22,6 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
  
     static InputStream is = null;

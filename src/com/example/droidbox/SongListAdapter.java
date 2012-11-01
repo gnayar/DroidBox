@@ -1,9 +1,7 @@
 package com.example.droidbox;
 
-import java.util.List;
-
-
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +33,19 @@ public class SongListAdapter extends ArrayAdapter<Song> {
 		artist.setText(song.getArtist());
 		return convertView;
 		
+	}
+	
+	public void refreshSongs(SongList songs) {
+		this.clear();
+		for(int i =0; i < songs.size(); i++) {
+			this.add(songs.get(i));
+		}
+	}
+	
+	@Override
+	public void notifyDataSetChanged() {
+		super.notifyDataSetChanged();
+		Log.v("Return", "notifyDataSetChanged");
 	}
 	
 	

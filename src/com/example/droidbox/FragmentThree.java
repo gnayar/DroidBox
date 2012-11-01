@@ -51,7 +51,7 @@ public class FragmentThree extends ListFragment
 		
 		Song song = (Song) l.getItemAtPosition(position);
 		String songID = song.getID();
-        String url = "http://192.168.1.5/db-wa/requestSong.php";
+        String url = "http://192.168.1.103/db-wa/requestSong.php";
     	//songs.add(new Song(artist, title, album, ID));
     	
     	 JSONParser jParser = new JSONParser();

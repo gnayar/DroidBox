@@ -2,13 +2,67 @@ package com.example.droidbox;
 
 import java.util.ArrayList;
 
-public class SongList extends ArrayList<Song> {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SongList extends ArrayList<Song> implements Parcelable{
 
 	public SongList() {
 		super();
+		
 	}
 
-
+	//--------------------------------------------------Parcelable Methods---------	
+	public SongList(Parcel in) {
+		this();
+		readFromParcel(in);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		public SongList createFromParcel(Parcel in) {
+			return new SongList(in);
+		}
+		public Object[] newArray(int arg0) {
+			return null;
+		}
+	};
+	
+	public void readFromParcel(Parcel in) {
+		this.clear();
+		int size = in.readInt();
+		for(int i = 0; i < size; i++) {
+			Song temp = new Song();
+			temp.setArtist(in.readString());
+			temp.setTitle(in.readString());
+			temp.setAlbum(in.readString());
+			temp.setID(in.readString());
+			this.add(temp);
+		}
+	}
+	
+	public void writeToParcel(Parcel dest, int flags) {
+		int size = this.size();
+		dest.writeInt(size);
+		
+		for(int i = 0; i < size; i++) {
+			Song temp = this.get(i);
+			dest.writeString(temp.getArtist());
+			dest.writeString(temp.getTitle());
+			dest.writeString(temp.getAlbum());
+			dest.writeString(temp.getID());
+		}	
+	}
+	
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	//-----------------------------------------------------------------------------------end of parcelable
+	
+	
 	//using a bubble sort which a complexity of O(n^2) which isn't too efficient  but so far seems fast enough
 	
 	
@@ -85,5 +139,99 @@ public class SongList extends ArrayList<Song> {
 		}
 		return this;
 	}
+	
+	
+	
+	
+	public SongList searchByTitle(String search) {
+		SongList results = new SongList();
+		
+		//not tested
+		
+		//midpoint method first
+		//first need the songlist in lexical order
+		SongList library = this.sortByTitle();
+		
+		//initialize bounds and find where the midpoint is
+		int a = 0;
+		int b = library.size();
+		int midpoint = (b-a)/2;
+		
+		//and now using the comparator
+		while(search.compareTo(library.get(midpoint).getTitle()) != 0) {
+			if(search.compareTo(library.get(midpoint).getTitle()) < 0) {
+				//so the search is less, need to reset b
+				b = midpoint;
+			}
+			else if(search.compareTo(library.get(midpoint).getTitle()) > 0) {
+				a = midpoint;
+			}
+			//lastly need to reset the midpoint
+			midpoint = (b-a)/2;
+		}
+		results.add(library.get(midpoint));
+		
+		return results;
+		
+	}
+
+	public SongList searchByAlbum(String search) {
+		SongList results = new SongList();
+		
+		//not tested
+		
+		//midpoint method first
+		//first need the songlist in lexical order
+		SongList library = this.sortByAlbum();
+		
+		//initialize bounds and find where the midpoint is
+		int a = 0;
+		int b = library.size();
+		int midpoint = (b-a)/2;
+		
+		//and now using the comparator
+		while(search.compareTo(library.get(midpoint).getAlbum()) != 0) {
+			if(search.compareTo(library.get(midpoint).getAlbum()) < 0) {
+				//so the search is less, need to reset b
+				b = midpoint;
+			}
+			else if(search.compareTo(library.get(midpoint).getAlbum()) > 0) {
+				a = midpoint;
+			}
+			//lastly need to reset the midpoint
+			midpoint = (b-a)/2;
+		}
+		results.add(library.get(midpoint));
+		
+		return results;
+		
+	}
+	
+	//----------------------------------------------------------------------------------
+	//VOTING METHODS
+	
+	public void moveUp(SongList sl, int position) {
+		//where sl is the currently being played SongList
+		//where position is the song that is selected (so in this case position-1 is the slot its moving to)
+		//just going to increase a songs position with the one before it and have them swap places
+		
+		Song temp = sl.get(position-1); //temporary hold for the song that will be removed
+		sl.add(position-1, sl.get(position));
+		sl.add(position, temp);
+		
+	}
+	
+	public void moveDown(SongList sl, int position) {
+		//where sl is the currently being played SongList
+		//where position is the song that is selected (so in this case position+1 is the slot its moving to)
+		
+		Song temp = sl.get(position+1); //temp for hold for where the song is going
+		sl.add(position+1, sl.get(position));
+		sl.add(position, temp);
+		
+		
+	}
+
+
 }
 
