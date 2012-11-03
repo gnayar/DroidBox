@@ -190,7 +190,7 @@ public class Main extends Activity {
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://192.168.1.103/db-wa/getLibrary.php";
+    	String url = "http://10.0.1.7/db-wa/getLibrary.php";
     	 JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();
@@ -214,7 +214,7 @@ public class Main extends Activity {
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://192.168.1.103/db-wa/getQueue.php";
+    	String url = "http://10.0.1.7/db-wa/getQueue.php";
     	JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();

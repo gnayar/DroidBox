@@ -146,65 +146,94 @@ public class SongList extends ArrayList<Song> implements Parcelable{
 	public SongList searchByTitle(String search) {
 		SongList results = new SongList();
 		
-		//not tested
+//		//not tested
+//		
+//		//midpoint method first
+//		//first need the songlist in lexical order
+//		SongList library = this.sortByTitle();
+//		
+//		//initialize bounds and find where the midpoint is
+//		int a = 0;
+//		int b = library.size();
+//		int midpoint = (b-a)/2;
+//		
+//		//and now using the comparator
+//		while(search.compareTo(library.get(midpoint).getTitle()) != 0) {
+//			if(search.compareTo(library.get(midpoint).getTitle()) < 0) {
+//				//so the search is less, need to reset b
+//				b = midpoint;
+//			}
+//			else if(search.compareTo(library.get(midpoint).getTitle()) > 0) {
+//				a = midpoint;
+//			}
+//			//lastly need to reset the midpoint
+//			midpoint = (b-a)/2;
+//		}
+//		results.add(library.get(midpoint));
 		
-		//midpoint method first
-		//first need the songlist in lexical order
-		SongList library = this.sortByTitle();
 		
-		//initialize bounds and find where the midpoint is
-		int a = 0;
-		int b = library.size();
-		int midpoint = (b-a)/2;
-		
-		//and now using the comparator
-		while(search.compareTo(library.get(midpoint).getTitle()) != 0) {
-			if(search.compareTo(library.get(midpoint).getTitle()) < 0) {
-				//so the search is less, need to reset b
-				b = midpoint;
-			}
-			else if(search.compareTo(library.get(midpoint).getTitle()) > 0) {
-				a = midpoint;
-			}
-			//lastly need to reset the midpoint
-			midpoint = (b-a)/2;
+		//contain method...surely slower and just as accurate but more reliable
+		SongList library = this.sortByTitle(); //isn't necessary for this type of search
+		for(int i = 0; i < this.size(); i++) {
+				if(search.contains(library.get(i).getTitle())) {
+					results.add(library.get(i));
+				}
 		}
-		results.add(library.get(midpoint));
-		
 		return results;
 		
 	}
 
 	public SongList searchByAlbum(String search) {
+//		SongList results = new SongList();
+//		
+//		//not tested
+//		
+//		//midpoint method first
+//		//first need the songlist in lexical order
+//		SongList library = this.sortByAlbum();
+//		
+//		//initialize bounds and find where the midpoint is
+//		int a = 0;
+//		int b = library.size();
+//		int midpoint = (b-a)/2;
+//		
+//		//and now using the comparator
+//		while(search.compareTo(library.get(midpoint).getAlbum()) != 0) {
+//			if(search.compareTo(library.get(midpoint).getAlbum()) < 0) {
+//				//so the search is less, need to reset b
+//				b = midpoint;
+//			}
+//			else if(search.compareTo(library.get(midpoint).getAlbum()) > 0) {
+//				a = midpoint;
+//			}
+//			//lastly need to reset the midpoint
+//			midpoint = (b-a)/2;
+//		}
+//		results.add(library.get(midpoint));
+//		
+//		return results;
+		
 		SongList results = new SongList();
-		
-		//not tested
-		
-		//midpoint method first
-		//first need the songlist in lexical order
-		SongList library = this.sortByAlbum();
-		
-		//initialize bounds and find where the midpoint is
-		int a = 0;
-		int b = library.size();
-		int midpoint = (b-a)/2;
-		
-		//and now using the comparator
-		while(search.compareTo(library.get(midpoint).getAlbum()) != 0) {
-			if(search.compareTo(library.get(midpoint).getAlbum()) < 0) {
-				//so the search is less, need to reset b
-				b = midpoint;
-			}
-			else if(search.compareTo(library.get(midpoint).getAlbum()) > 0) {
-				a = midpoint;
-			}
-			//lastly need to reset the midpoint
-			midpoint = (b-a)/2;
+		SongList library = this.sortByAlbum(); //isn't necessary for this type of search
+		for(int i = 0; i < this.size(); i++) {
+				if(search.contains(library.get(i).getAlbum())) {
+					results.add(library.get(i));
+				}
 		}
-		results.add(library.get(midpoint));
-		
 		return results;
 		
+	}
+	
+	
+	public SongList searchByArtist(String search) {
+		SongList results = new SongList();
+		SongList library = this.sortByArtist(); //isn't necessary for this type of search
+		for(int i = 0; i < this.size(); i++) {
+				if(search.contains(library.get(i).getArtist())) {
+					results.add(library.get(i));
+				}
+		}
+		return results;
 	}
 	
 	//----------------------------------------------------------------------------------

@@ -28,6 +28,8 @@ public class MusicLibrary extends SherlockFragmentActivity
 		
 		chosen = false;
 		this.setTheme(R.style.Theme_Sherlock_Light);
+		//songs.add("a","a","a","1");
+		
 		//addSongs();//Once JSON is implemented just call a ReadFile here to read in the library. Current Situation is for Testing Only
 		
      	File file = this.getFileStreamPath("update.txt");

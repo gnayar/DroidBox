@@ -50,6 +50,10 @@ public class SearchableActivity extends Activity {
     	for(int i = 0; i<temp.size(); i++) {
     		results.add(temp.get(i));
     	}
+    	SongList temp2 = songs.searchByArtist(query);
+    	for(int i = 0; i < temp2.size(); i++) {
+    		results.add(temp2.get(i));
+    	}
     	if (results.get(0) == null) {
     		results.add(new Song("nothing","is","here", "12"));
     	}
