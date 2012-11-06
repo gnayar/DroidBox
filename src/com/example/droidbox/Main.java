@@ -35,6 +35,12 @@ public class Main extends Activity {
 	public testFileWriter t1;
 	//JSON
 	public static int check = 1;
+	
+	//Inputted variables from the user, stored in the login activity and copied here for use. 
+	public String tableNumber = LoginActivity.tableNumber;
+	public String tablePasscode = LoginActivity.tablePasscode;
+	public String tableNickname = LoginActivity.tableNickname;
+	
 	int TIMEOUT_MILLISEC = 10000;
 	
 	
@@ -184,14 +190,12 @@ public class Main extends Activity {
     
     public SongList getLibrary() 
     {
-    	
-    	String test = "nothing";
-    	
+    	//creating jParser object. 
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://10.0.1.7/db-wa/getLibrary.php";
-    	 JSONObject json = new JSONObject();
+    	String url = "http://9.12.10.1/db-wa/getLibrary.php";
+    	JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();
 		} catch (InterruptedException e1) {
@@ -202,19 +206,15 @@ public class Main extends Activity {
 			e1.printStackTrace();
 		}
         //JSONObject json = jParser.getTempHolder();
-     
-     
         return jParser.createList(json);
     }
 
     public SongList getQueue() 
     {
-    	String test = "nothing";
-    	
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://10.0.1.7/db-wa/getQueue.php";
+    	String url = "http://9.12.10.1/db-wa/getQueue.php";
     	JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();

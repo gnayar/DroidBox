@@ -1,5 +1,9 @@
 package com.example.droidbox;
 
+import java.util.concurrent.ExecutionException;
+
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +16,7 @@ public class LoginActivity extends Activity {
 	public static String tableNumber;
 	public static String tablePasscode;
 	public static String tableNickname;
+	public static String requestType; // 0 paid, 1 non-paid
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,12 +32,12 @@ public class LoginActivity extends Activity {
     
     public void KillApp(View view)
     {
+    	//close the application
     	finish();
-    	//close the application...somehow
+    	
     }
     public void Authenticate(View view)
     {
-
     	EditText num = (EditText) findViewById(R.id.editText0);//getting the table number
     	String tableNumber = num.getText().toString();
     	this.tableNumber = tableNumber;
@@ -44,8 +49,8 @@ public class LoginActivity extends Activity {
     	EditText pass = (EditText) findViewById(R.id.editText2);//getting the password
     	String tablePassword = pass.getText().toString();
     	this.tablePasscode = tablePassword;
-    	communicate( tablePassword, tableNumber, nickname);//passing parameters to helper method communicate
     	
+    	communicate( tablePassword, tableNumber, nickname, "0");//passing parameters to helper method communicate
     	
     	Intent intent = new Intent(this, Main.class);
     	startActivity(intent);
@@ -53,27 +58,23 @@ public class LoginActivity extends Activity {
         SplashscreenActivity.alreadyLogged = true;//set boolean to true!
     }
     
-    public void communicate( String tablePassword, String tableNumber, String nickname) 
+    public void communicate( String tablePassword, String tableNumber, String nickname, String requestType) 
     {
-    	/*
-    	String test = "nothing";
     	
     	JSONParser jParser = new JSONParser();
-    	List<NameValuePair> params = new ArrayList<NameValuePair>();
     	
-    	//adding parameters to send through JSON
-    	 params.add(new BasicNameValuePair("t_num", tableNumber ));
-    	 params.add(new BasicNameValuePair("t_code", tablePassword ));
-    	 
-        // sending parameters through JSON
-    	String url = "http://9.12.10.1/";
-        JSONObject json = jParser.makeHttpRequest(url, "POST", params, "0");
-        
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, "authenticated", duration);
-        toast.show();
-        */
+        // getting JSON string from URL
+    	String url = "http://9.12.10.1/db-wa/getLibrary.php";
+    	 JSONObject json = new JSONObject();
+        try {//passing in all parameters for testing purposes.
+			json = jParser.execute(url, "t_num", tableNumber, "t_code", tablePassword, "req_type", requestType).get();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ExecutionException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
     
     public void onBackPressed() {
