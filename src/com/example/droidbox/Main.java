@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,9 +38,9 @@ public class Main extends Activity {
 	public static int check = 1;
 	
 	//Inputted variables from the user, stored in the login activity and copied here for use. 
-	public String tableNumber = LoginActivity.tableNumber;
-	public String tablePasscode = LoginActivity.tablePasscode;
-	public String tableNickname = LoginActivity.tableNickname;
+	public String tableNumber;
+	public String tablePasscode;
+	public String tableNickname;
 	
 	int TIMEOUT_MILLISEC = 10000;
 	
@@ -47,6 +48,10 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences loginSettings = getSharedPreferences("LoginDetails",0);
+        tableNumber = loginSettings.getString("tableNumber", "FAIL");
+        tablePasscode = loginSettings.getString("tablePassword", "FAIL");
+        tableNickname = loginSettings.getString("nickname", "FAIL");
         
         Log.v("Return", "onCreate");
     	updateQueue();
@@ -159,10 +164,22 @@ public class Main extends Activity {
     			if(info.position == 0) {
     				return false;
     			} else {
-    				songs.moveUp(songs, info.position);
-    				//method call will be in the songlist class
-    				adapter.notifyDataSetChanged();
-    				listViewSong.requestLayout();
+
+    				String url = "http://9.12.10.1/db-wa/requestSong.php";
+    		    	
+    		    	 JSONParser jParser = new JSONParser();
+    		    	 JSONObject json = new JSONObject();
+    		         try {
+    		        
+    		        	String songID = songs.get(info.position).getID();
+    		        	jParser.execute(url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","1");
+    		        	
+    		        	
+    		 		} catch (Exception e1) {
+    		 			// TODO Auto-generated catch block
+    		 			e1.printStackTrace();
+    		 		} 
+    				updateQueue();
     				return true;
     				
     			}

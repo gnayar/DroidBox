@@ -13,5 +13,6 @@
     <string name="title_activity_searchable">SearchableActivity</string>
     <string name="Search">Search</string>
     <string name="upvote">Upvote</string>
+    <string name="sendQueue">Add to Queue</string>
 
 </resources>

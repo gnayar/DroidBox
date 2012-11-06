@@ -93,7 +93,7 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
 	}
 
     // function get json from url
-    // by making HTTP POST or GET mehtod
+    // by making HTTP POST or GET method
 
     
     public SongList createList(JSONObject o) {
@@ -120,6 +120,7 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     			creation.add(new Song(artist,title,album, id));
     			
     		}
+    		
     	} catch (JSONException e) {
     		e.printStackTrace();
     	}

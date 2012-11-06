@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,10 +22,18 @@ public class MusicLibrary extends SherlockFragmentActivity
 	SongList songs = new SongList();
 	boolean chosen = false;
 	Context context = this;
+	
+	public String tableNumber;
+	public String tablePasscode;
+	public String tableNickname;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		
+		SharedPreferences loginSettings = getSharedPreferences("LoginDetails",0);
+        tableNumber = loginSettings.getString("tableNumber", "FAIL");
+        tablePasscode = loginSettings.getString("tablePassword", "FAIL");
+        tableNickname = loginSettings.getString("nickname", "FAIL");
 		
 		chosen = false;
 		this.setTheme(R.style.Theme_Sherlock_Light);
@@ -131,6 +140,20 @@ public class MusicLibrary extends SherlockFragmentActivity
     	b.putParcelable("library",songs);
     	startSearch(null, false, b, false);
     	return true;
+	}
+	
+	public String getTableNumber() {
+		return tableNumber;
+	}
+
+
+	public String getTablePasscode() {
+		return tablePasscode;
+	}
+
+
+	public String getTableNickname() {
+		return tableNickname;
 	}
 	
 }

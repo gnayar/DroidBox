@@ -18,6 +18,9 @@ public class FragmentThree extends ListFragment
 {
 	
 	Song temp;
+	public String tableNumber;
+	public String tablePasscode;
+	public String tableNickname;
 	
 	public static FragmentThree newInstance(String content){
 		FragmentThree fragment = new FragmentThree();
@@ -50,16 +53,20 @@ public class FragmentThree extends ListFragment
 	public void onListItemClick (ListView l, View v, int position, long id) {
 		
 		Song song = (Song) l.getItemAtPosition(position);
+		tableNickname = ((MusicLibrary)getActivity()).tableNickname;
+		tableNumber = ((MusicLibrary)getActivity()).tableNumber;
+		tablePasscode = ((MusicLibrary)getActivity()).tablePasscode;
+		
+		
 		String songID = song.getID();
-        String url = "http://10.0.1.7/db-wa/requestSong.php";
+        String url = "http://9.12.10.1/db-wa/requestSong.php";
     	//songs.add(new Song(artist, title, album, ID));
-    	
     	 JSONParser jParser = new JSONParser();
     	 JSONObject json = new JSONObject();
          try {
         	((MusicLibrary)getActivity()).chosen = true;
         	
-        	jParser.execute(url,"songID",songID);
+        	jParser.execute(url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
         	
         	((MusicLibrary)getActivity()).sendToMain();
         	
