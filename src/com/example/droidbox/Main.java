@@ -104,12 +104,14 @@ public class Main extends Activity {
 
     
     
+    
     public void onResume() {
     	super.onResume();
     	Log.v("Return", "Resumed");
     	updateQueue();
-    	adapter.setNotifyOnChange(false);
-    	adapter.notifyDataSetChanged();
+    //	adapter.setNotifyOnChange(false);
+    //	adapter.notifyDataSetChanged();
+    	startRepeatingTask();
         
         
     	
@@ -286,6 +288,7 @@ public class Main extends Activity {
 
     public void onPause() {
     	super.onPause();
+    	stopRepeatingTask();
     	//testFileWriter writeLibrary = new testFileWriter();
     	//writeLibrary.update(this,songs);
     }
