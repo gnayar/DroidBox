@@ -25,13 +25,5 @@
         android:layout_weight="0.49"
         android:onClick="goToLibrary"
         android:text="Go to Library" />
-    
-        <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_weight="0.49"
-        android:onClick="buttonRefresh"
-        android:text="Refresh" />
 
 </LinearLayout>

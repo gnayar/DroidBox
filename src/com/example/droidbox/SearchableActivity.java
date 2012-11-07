@@ -62,7 +62,7 @@ public class SearchableActivity extends Activity {
 		        
 				
 				String songID = song.getID();
-		        String url = "http://9.12.10.1/db-wa/requestSong.php";
+		        String url = "http://"+ getString(R.string.ip_address)+"/db-wa/requestSong.php";
 		    	//songs.add(new Song(artist, title, album, ID));
 		    	 JSONParser jParser = new JSONParser();
 		    	 JSONObject json = new JSONObject();

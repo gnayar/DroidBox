@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -23,6 +24,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 //@SuppressLint("NewApi")
+
+
+
+
 public class Main extends Activity {
 	private ListView listViewSong;
 	private Context context;
@@ -36,14 +41,13 @@ public class Main extends Activity {
 	public testFileWriter t1;
 	//JSON
 	public static int check = 1;
+	private Handler m_Handler;
+	private int m_interval = 10000;
 	
 	//Inputted variables from the user, stored in the login activity and copied here for use. 
 	public String tableNumber;
 	public String tablePasscode;
 	public String tableNickname;
-	
-	int TIMEOUT_MILLISEC = 10000;
-	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,8 @@ public class Main extends Activity {
         tableNumber = loginSettings.getString("tableNumber", "FAIL");
         tablePasscode = loginSettings.getString("tablePassword", "FAIL");
         tableNickname = loginSettings.getString("nickname", "FAIL");
+        
+        m_Handler = new Handler();
         
         Log.v("Return", "onCreate");
     	updateQueue();
@@ -77,9 +83,27 @@ public class Main extends Activity {
             }
             
         });
-    
-	}
 
+        startRepeatingTask();
+	}
+    
+    Runnable m_statusChecker = new Runnable(){
+    	@Override
+    	public void run(){
+    		refresh();
+    		m_Handler.postDelayed(m_statusChecker, m_interval);
+    	}
+    };
+    
+    void startRepeatingTask(){
+    	m_statusChecker.run();
+    }
+    void stopRepeatingTask(){
+    	m_Handler.removeCallbacks(m_statusChecker);
+    }
+
+    
+    
     public void onResume() {
     	super.onResume();
     	Log.v("Return", "Resumed");
@@ -165,7 +189,7 @@ public class Main extends Activity {
     				return false;
     			} else {
 
-    				String url = "http://9.12.10.1/db-wa/requestSong.php";
+    				String url = "http://"+ this.getString(R.string.ip_address)+"/db-wa/requestSong.php";
     		    	
     		    	 JSONParser jParser = new JSONParser();
     		    	 JSONObject json = new JSONObject();
@@ -190,11 +214,6 @@ public class Main extends Activity {
 
     }
 
-    
-    public void buttonRefresh(View view){
-    	Log.v("Return", "Refresh");
-    	refresh();
-    }
     
     public void refresh() {
     	updateQueue();
@@ -231,7 +250,7 @@ public class Main extends Activity {
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://9.12.10.1/db-wa/getQueue.php";
+    	String url = "http://"+ this.getString(R.string.ip_address)+"/db-wa/getQueue.php";
     	JSONObject json = new JSONObject();
         try {
 			json = jParser.execute(url).get();
