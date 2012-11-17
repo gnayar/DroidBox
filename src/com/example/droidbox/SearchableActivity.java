@@ -67,7 +67,7 @@ public class SearchableActivity extends Activity {
 		    	 JSONParser jParser = new JSONParser();
 		    	 JSONObject json = new JSONObject();
 		         try {
-		        	jParser.execute(url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
+		        	jParser.execute("3",url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
 		        	
 		 		} catch (Exception e1) {
 		 			// TODO Auto-generated catch block

@@ -122,8 +122,7 @@ public class MusicLibrary extends SherlockFragmentActivity
 	
 	
 	public void sendToMain() {
-		  Intent intent = new Intent(this, Main.class);
-		  startActivity(intent);
+		  finish();
 		  
 	}
 	

@@ -25,7 +25,8 @@ public class LoginActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);       
+        setContentView(R.layout.activity_login);   
+        
     }
 
     @Override
@@ -61,15 +62,16 @@ public class LoginActivity extends Activity {
     	edit.putString("nickname",nickname);
     	edit.putString("tableNumber", tableNumber);
     	edit.putString("tablePassword",tablePassword);
+    	edit.putBoolean("libInit", false);
     	edit.commit();
     	
     	JSONParser jParser = new JSONParser();
     	
         // getting JSON string from URL
-    	String url = "http://9.12.10.1/db-wa/checkCredentials.php";
+    	String url = "http://"+ this.getString(R.string.ip_address)+"/db-wa/checkCredentials.php";
     	JSONObject json = new JSONObject();
         try {
-			json = jParser.execute(url,"t_num",tableNumber,"t_code",tablePassword).get();
+			json = jParser.execute("3",url,"t_num",tableNumber,"t_code",tablePassword).get();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -111,8 +113,4 @@ public class LoginActivity extends Activity {
     	}
     	return suc;
     }
-    public void onBackPressed() {
-    	//overriding back button so that user can't go back to main screen.
-    }
-    
 }

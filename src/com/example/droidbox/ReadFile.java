@@ -42,13 +42,13 @@ public class ReadFile {
 			//else {
 				//library needs to be updated
 				//how can I tell the file is done? there is no hasNext() ??
-				Toast.makeText(context, "updating", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(context, "updating", Toast.LENGTH_SHORT).show();
 				while( (artist = reader.readLine()) != null) {
 					song = reader.readLine();
 					album = reader.readLine();
 					String ID = reader.readLine();
 					songs.add(new Song(artist, song, album, ID)); //needs to be changed to account for ID's
-					Toast.makeText(context, "added", Toast.LENGTH_SHORT).show();
+					//Toast.makeText(context, "added", Toast.LENGTH_SHORT).show();
 				//}
 			}
 			//in.close(); //close the buffer

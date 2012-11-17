@@ -50,7 +50,7 @@ public class testFileWriter {
 
 			}	
 			write.close();
-			Toast.makeText(context, "file created", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "file created", Toast.LENGTH_SHORT).show();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

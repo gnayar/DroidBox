@@ -63,7 +63,7 @@ public class FragmentTwo extends ListFragment
          try {
         	((MusicLibrary)getActivity()).chosen = true;
         	
-        	jParser.execute(url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
+        	jParser.execute("2",url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
         	
         	((MusicLibrary)getActivity()).sendToMain();
         	

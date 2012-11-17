@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
@@ -28,6 +29,8 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     static JSONObject jObj = null;
     public JSONObject tempHolder = null;
     static String json = "";
+    int choice = 0;
+    Context context;
  
     // constructor
     public JSONParser() {
@@ -35,9 +38,10 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     }
     @Override
 	protected JSONObject doInBackground(String... params) {
-		String url = params[0];
+    	choice = Integer.valueOf(params[0]);
+		String url = params[1];
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-		for(int i = 1;i<params.length;i+=2){
+		for(int i = 2;i<params.length;i+=2){
 			parameters.add(new BasicNameValuePair(params[i], params[i+1]));
 		}
 		try {
@@ -88,13 +92,25 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
             Log.e("JSON Parser", "jsonstring" + json);
         }
  
-        // return JSON String
+        // return JSON Object, execute.get methods will grab this object
         return jObj;
 	}
 
-    // function get json from url
-    // by making HTTP POST or GET method
-
+    @Override
+    protected void onPostExecute(JSONObject Object){
+    	//For special case of updating queue, all others will skip
+    	if(choice == 1){
+    		//generate songList for Queue and update view
+    		SongList output = createList(Object);
+    		((Main)context).songs = output;
+    		((Main)context).adapter.refreshSongs(output);
+    		((Main)context).adapter.notifyDataSetChanged();
+    	}
+    }
+    
+    public void setContext(Context temp){
+    	this.context = temp;
+    }
     
     public SongList createList(JSONObject o) {
     	SongList creation = new SongList();
