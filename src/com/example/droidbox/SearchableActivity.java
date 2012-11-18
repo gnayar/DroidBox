@@ -87,20 +87,30 @@ public class SearchableActivity extends Activity {
     
     
     private void doMySearch(String query, SongList songs) {
-		//Insert search logic
-    	results = songs.searchByTitle(query);
-    	Log.v("title search", "titles have been searched");
-    	SongList temp = songs.searchByAlbum(query);
-    	for(int i = 0; i<temp.size(); i++) {
-    		results.add(temp.get(i));
-    	}
-    	SongList temp2 = songs.searchByArtist(query);
-    	for(int i = 0; i < temp2.size(); i++) {
-    		results.add(temp2.get(i));
-    	}
+//		//Insert search logic
+//    	results = songs.searchByTitle(query);
+//    	Log.v("title search", "titles have been searched");
+//    	SongList temp = songs.searchByAlbum(query);
+//    	for(int i = 0; i<temp.size(); i++) {
+//    		results.add(temp.get(i));
+//    	}
+//    	SongList temp2 = songs.searchByArtist(query);
+//    	for(int i = 0; i < temp2.size(); i++) {
+//    		results.add(temp2.get(i));
+//    	}
+//    	if (results.get(0) == null) {
+//    		results.add(new Song("nothing","is","here", "12"));
+//    	}
+    	
+    	
+		//Using regular expressions; untested (11/16)
+    	results = songs.searchUsingRegex(query);
+    	//a little error control; this should be improved maybe a popup dialog??
     	if (results.get(0) == null) {
     		results.add(new Song("nothing","is","here", "12"));
     	}
+	
+    	
 	}
 	
 

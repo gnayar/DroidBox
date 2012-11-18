@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class SongList extends ArrayList<Song> implements Parcelable{
 
@@ -235,6 +237,46 @@ public class SongList extends ArrayList<Song> implements Parcelable{
 		}
 		return results;
 	}
+	
+	
+	//IMPPROVED SEACHING METHODS using regular expressions - as good as its gonna get
+		//should be able to include artist,title,album all one in method
+		
+		//worked on test program and is implemented in searchable but UNTESTED (11/16)
+		public SongList searchUsingRegex(String search) {
+			SongList results = new SongList();
+			//shouldn't need to sort it! saves time
+			
+			Pattern pattern = Pattern.compile(search, Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(this.get(0).getTitle()); //just a place holder so only construct one
+			
+			//three loops; one for artist, one for album, one for title
+			for(int i = 0; i < this.size(); i++) {
+				matcher.reset(this.get(i).getArtist());
+				if(matcher.find()) {
+					results.add(this.get(i));
+				}
+			}
+			
+			for(int i = 0; i < this.size(); i++) {
+				matcher.reset(this.get(i).getAlbum());
+				if(matcher.find()) {
+					results.add(this.get(i));
+				}
+			}
+			
+			for(int i = 0; i < this.size(); i++) {
+				matcher.reset(this.get(i).getTitle());
+				if(matcher.find()) {
+					results.add(this.get(i));
+				}
+			}
+			
+			return results;
+			
+			
+		}
+	
 	
 	//----------------------------------------------------------------------------------
 	//VOTING METHODS
