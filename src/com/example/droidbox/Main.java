@@ -18,9 +18,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 //@SuppressLint("NewApi")
@@ -46,6 +48,7 @@ public class Main extends Activity {
 	public String tableNumber;
 	public String tablePasscode;
 	public String tableNickname;
+	public ImageView imageButton;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,19 +82,21 @@ public class Main extends Activity {
         listViewSong.setAdapter(adapter);
         Log.v("Return", "onCreate Finished");
         
+        
+
         //Setup Clicking System
         //allows a short click on a list item when set to TRUE
-        listViewSong.setClickable(true);
+//        listViewSong.setClickable(true);
         registerForContextMenu(listViewSong);
         //what do when setClickable == true and when an item is clicked. should pop up a menu
-        listViewSong.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {              
-        		Song song = (Song) listViewSong.getItemAtPosition(position);
-        		//CharSequence test = (CharSequence) song.getAlbum();
-        		//Toast.makeText(context, test, 15).show();
-            }
-            
-        });
+//        listViewSong.setOnItemClickListener(new OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {              
+//        		Song song = (Song) listViewSong.getItemAtPosition(position);
+//        		//CharSequence test = (CharSequence) song.getAlbum();
+//        		//Toast.makeText(context, test, 15).show();
+//            }
+//            
+//        });
         //Start autoupdater
         startRepeatingTask();
 	}
@@ -111,6 +116,7 @@ public class Main extends Activity {
     void stopRepeatingTask(){
     	m_Handler.removeCallbacks(m_statusChecker);
     }
+    
 
 
     public void onResume() {
@@ -241,7 +247,13 @@ public class Main extends Activity {
     	adapter.notifyDataSetChanged();
     }
     	
-    	
+    public String getTableNumber() {
+    	return tableNumber;
+    }
+    public String getTablePasscode() {
+    	return tablePasscode;
+    }
+    
     
     
     public SongList getLibrary() 
@@ -262,7 +274,7 @@ public class Main extends Activity {
 			e1.printStackTrace();
 		}
         //JSONObject json = jParser.getTempHolder();
-        return jParser.createList(json);
+        return jParser.createList(json, 1);
     }
 
     public SongList getQueue() 
@@ -283,7 +295,7 @@ public class Main extends Activity {
 			e1.printStackTrace();
 		}
       
-        return jParser.createList(json);
+        return jParser.createList(json, 18);
     }
 
     public void updateQueue() {

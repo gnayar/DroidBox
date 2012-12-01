@@ -13,6 +13,8 @@ public class SongList extends ArrayList<Song> implements Parcelable{
 		super();
 		
 	}
+	
+	
 
 	//--------------------------------------------------Parcelable Methods---------	
 	public SongList(Parcel in) {

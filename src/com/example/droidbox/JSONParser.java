@@ -101,10 +101,17 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     	//For special case of updating queue, all others will skip
     	if(choice == 1){
     		//generate songList for Queue and update view
-    		SongList output = createList(Object);
+    		SongList output = createList(Object, choice);
     		((Main)context).songs = output;
     		((Main)context).adapter.refreshSongs(output);
     		((Main)context).adapter.notifyDataSetChanged();
+    	}
+    	else if(choice == 18) {
+    		SongList output = createList(Object, choice);
+    		((Main)context).songs = output;
+    		((Main)context).adapter.refreshSongs(output);
+    		((Main)context).adapter.notifyDataSetChanged();
+    		
     	}
     }
     
@@ -112,19 +119,23 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     	this.context = temp;
     }
     
-    public SongList createList(JSONObject o) {
+    public SongList createList(JSONObject o, int d) {
     	SongList creation = new SongList();
     	final String TAG_ARTIST = "artist";
     	final String TAG_ALBUM = "album";
     	final String TAG_TITLE = "title";
     	final String TAG_ID = "id";
     	final String TAG_SONGS = "songs";
-    	
+    	final String REQ_TYPE = "req_type";
+    	final String NUM_VOTES = "num_votes";
     	JSONArray songsJSON = null;
     	//JSONParser jParser = new JSONParser();
     	
     	
     	try {
+    		if(o.getString("success").equals("1")) {
+    			Log.v("message", o.getString("message"));
+    		}
     		songsJSON = o.getJSONArray(TAG_SONGS);
     		
     		for(int i = 0; i < songsJSON.length(); i++) {
@@ -133,8 +144,13 @@ public class JSONParser extends AsyncTask<String, Integer, JSONObject>{
     			String album = c.getString(TAG_ALBUM);
     			String title = c.getString(TAG_TITLE);
     			String id = c.getString(TAG_ID);
-    			creation.add(new Song(artist,title,album, id));
-    			
+    			if (d == 15) {
+    				String req_type = c.getString(REQ_TYPE);
+    				String num_votes = c.getString(NUM_VOTES);
+    				creation.add(new Song(artist,title,album, id, "1", num_votes));
+    			} else 
+    				creation.add(new Song(artist,title,album, id));
+
     		}
     		
     	} catch (JSONException e) {
