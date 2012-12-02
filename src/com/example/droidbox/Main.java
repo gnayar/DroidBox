@@ -35,7 +35,7 @@ public class Main extends Activity {
 	
 	public static String ID, ALBUM_NAME, ARTIST_NAME, SONG_NAME;
 	public SongList songs = new SongList();
-	public SongListAdapter adapter;
+	public QueueListAdapter adapter;
 	public File file, myDir;//To write music library
 	public testFileWriter t1;
 	//JSON
@@ -87,7 +87,7 @@ public class Main extends Activity {
         setContentView(R.layout.activity_main);
         context = this;
         listViewSong = (ListView)findViewById(R.id.song_list);
-        adapter = new SongListAdapter(context, R.layout.song_row_item, songs);
+        adapter = new QueueListAdapter(context, R.layout.upvote_song_row_item, songs);
         listViewSong.setAdapter(adapter);
         Log.v("Return", "onCreate Finished");
         
