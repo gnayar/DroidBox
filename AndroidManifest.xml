@@ -82,6 +82,13 @@
                 <action android:name="android.intent.action.ALBUM" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SongsInArtistActivity"
+            android:label="@string/title_activity_songs_in_artist" >
+            <intent-filter>
+                <action android:name="android.intent.action.ARTIST" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

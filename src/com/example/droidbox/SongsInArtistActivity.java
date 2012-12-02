@@ -12,17 +12,17 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-public class SongsInAlbumActivity extends Activity {
+public class SongsInArtistActivity extends Activity {
 	
 	private ListView listViewSongSearch;
-	SongList albumList = new SongList();
+	SongList artistList = new SongList();
 	Context ctx;
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_songs_in_album);
+        setContentView(R.layout.activity_songs_in_artist);
         
        Bundle b = getIntent().getExtras();
         
@@ -32,12 +32,12 @@ public class SongsInAlbumActivity extends Activity {
         for(int i = 0; i < s ; i++)
         {
     		tempSong = b.getParcelable("Message"+i);
-    		albumList.add(tempSong);
+    		artistList.add(tempSong);
         }
 		
           
-        listViewSongSearch = (ListView)findViewById(R.id.song_list1);
-          SongListAdapter adapter = new SongListAdapter(getBaseContext(), R.layout.song_row_item, albumList);
+        listViewSongSearch = (ListView)findViewById(R.id.song_list2);
+          SongListAdapter adapter = new SongListAdapter(getBaseContext(), R.layout.song_row_item, artistList);
           listViewSongSearch.setAdapter(adapter);
           registerForContextMenu(listViewSongSearch);
           listViewSongSearch.setClickable(true);

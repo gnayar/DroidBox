@@ -1,12 +1,17 @@
 package com.example.droidbox;
 
+import java.util.ArrayList;
+
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
@@ -34,43 +39,52 @@ public class FragmentTwo extends ListFragment
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
        	View test = super.onCreateView(inflater, container, savedInstanceState);
-       	
 		SongList song2 = new SongList();
 		for(int i = 0;i<songs.size();i++ ){
 			song2.add(songs.get(i));
 		}
 		song2.sortByArtist();
-		
-		setListAdapter(new SongListAdapter(inflater.getContext(),R.layout.song_row_item,song2));
 
+		ArrayList<String> artists = new ArrayList<String>();
+		String current = "";
+		for(int i = 0; i<song2.size();i++){
+			String temp = song2.get(i).getArtist();
+			if(!temp.equals(current)){
+				artists.add(temp);
+				current = temp;
+			}
+		}
+		
+		setListAdapter((ListAdapter)new ArrayAdapter<String>(inflater.getContext(),android.R.layout.simple_list_item_1,artists));
         return test;
     }
 
 	@Override
-	public void onListItemClick (ListView l, View v, int position, long id) {
+	public void onListItemClick (ListView l, View v, int position, long id)
+	{
+		SongList artistList = new SongList();
 		
-		Song song = (Song) l.getItemAtPosition(position);
-		tableNickname = ((MusicLibrary)getActivity()).tableNickname;
-		tableNumber = ((MusicLibrary)getActivity()).tableNumber;
-		tablePasscode = ((MusicLibrary)getActivity()).tablePasscode;
+		String artist = (String) l.getItemAtPosition(position);
 		
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if( songs.get(i).getArtist().equals(artist) )
+			{
+				artistList.add(songs.get(i));
+			}
+		}
+
+		Intent intent = new Intent(getActivity(), SongsInArtistActivity.class);
+		int size = artistList.size();
+		intent.putExtra("size", size);
 		
-		String songID = song.getID();
-        String url = "http://"+ this.getString(R.string.ip_address)+"/db-wa/requestSong.php";
-    	//songs.add(new Song(artist, title, album, ID));
-    	 JSONParser jParser = new JSONParser();
-    	 JSONObject json = new JSONObject();
-         try {
-        	((MusicLibrary)getActivity()).chosen = true;
-        	
-        	jParser.execute("2",url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
-        	
-        	((MusicLibrary)getActivity()).sendToMain();
-        	
- 		} catch (Exception e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		} 
+		for(int i = 0; i < artistList.size(); i++)
+		{
+			String message = "Message"+i;
+			intent.putExtra (message, artistList.get(i) );
+		}
+		
+		startActivity(intent);
          
 	}
 }
