@@ -1,10 +1,6 @@
 package com.example.droidbox;
 
-import java.util.concurrent.ExecutionException;
-
-import org.json.JSONObject;
-
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -52,28 +48,31 @@ public class FragmentThree extends ListFragment
 	@Override
 	public void onListItemClick (ListView l, View v, int position, long id) {
 		
+		SongList albumsList = new SongList();
+		songs.sortByAlbum();
+		
 		Song song = (Song) l.getItemAtPosition(position);
-		tableNickname = ((MusicLibrary)getActivity()).tableNickname;
-		tableNumber = ((MusicLibrary)getActivity()).tableNumber;
-		tablePasscode = ((MusicLibrary)getActivity()).tablePasscode;
+		String album = song.getAlbum();
 		
+		for(int i = 0; i < songs.size(); i++)
+		{
+			if( songs.get(i).getAlbum().equals(album) )
+			{
+				albumsList.add(songs.get(i));
+			}
+		}
+
+		Intent intent = new Intent(getActivity(), SongsInAlbumActivity.class);
+		int s = albumsList.size();
+		intent.putExtra("size", s);
 		
-		String songID = song.getID();
-        String url = "http://"+ this.getString(R.string.ip_address)+"/db-wa/requestSong.php";
-    	//songs.add(new Song(artist, title, album, ID));
-    	 JSONParser jParser = new JSONParser();
-    	 JSONObject json = new JSONObject();
-         try {
-        	((MusicLibrary)getActivity()).chosen = true;
-        	
-        	jParser.execute("2",url,"songID",songID,"t_num",tableNumber,"t_code",tablePasscode,"req_type","0");
-        	
-        	((MusicLibrary)getActivity()).sendToMain();
-        	
- 		} catch (Exception e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		} 
-         
+		for(int i = 0; i < albumsList.size(); i++)
+		{
+			String message = "Message"+i;
+			intent.putExtra (message, albumsList.get(i) );
+		}
+		
+		startActivity(intent);
+	
 	}
 }

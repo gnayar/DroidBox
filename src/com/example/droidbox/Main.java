@@ -73,6 +73,15 @@ public class Main extends Activity {
 	        		Log.e("JSONParser", "Could not initialize queue");
 	        	}
 	        }
+      //Queue is empty toast
+        if(songs.size() == 0)
+        {
+        	Context context = getApplicationContext();
+            CharSequence text = "Queue is empty";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
         
         //Setup Listview
         setContentView(R.layout.activity_main);

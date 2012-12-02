@@ -1,6 +1,9 @@
 package com.example.droidbox;
 
-public class Song {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Song implements Parcelable{
 	private String title;
 	private String artist;
 	private String album;
@@ -63,10 +66,59 @@ public class Song {
 	public String getNumVotes() {
 		return num_votes;
 	}
+	
+	public void setNumVotes( String num_votes)
+	{
+		this.num_votes = num_votes;
+	}
+	
 	public String getReqType() {
 		return req_type;
 	}
 	
+	public void setReqType(String req_type) {
+		this.req_type = req_type;
+	}
 	
+	//-------------------------------------------Parcelable Methods--------------------------------//	
+	public int describeContents()
+	{
+        return 0;
+    }
+
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeString(this.getArtist());
+		dest.writeString(this.getTitle());
+		dest.writeString(this.getAlbum());
+		dest.writeString(this.getID());
+		dest.writeString(this.getReqType());
+		dest.writeString(this.getNumVotes());
+		
+	}
+	
+	public static final Parcelable.Creator<Song> CREATOR = new Parcelable.Creator<Song>()
+	{
+		public Song createFromParcel(Parcel in)
+		{
+			return new Song(in);
+		}
+		public Song[] newArray(int size)
+		{
+			return new Song[size];
+		}
+	};
+	
+	 private Song(Parcel in)
+	 {
+		this.setArtist(in.readString());
+		this.setTitle(in.readString());
+		this.setAlbum(in.readString());
+		this.setID(in.readString());
+		this.setReqType(in.readString());
+		this.setNumVotes(in.readString());
+		
+     }
+	//-------------------------------------end of parcelable---------------------------------------------//
 	
 }
