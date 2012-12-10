@@ -32,7 +32,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight = "10"
-	        android:src="@drawable/up_arrow" />
+	        android:src="@drawable/up_arrowt" />
 	</LinearLayout>
         
 	<LinearLayout 
@@ -45,11 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp" />
-	    <TextView
-	        android:id="@+id/num_votes"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:textSize="15sp" />
+
 	</LinearLayout>
         
         
