@@ -14,7 +14,7 @@
     <string name="Search">Search</string>
     <string name="upvote">Upvote</string>
     <string name="sendQueue">Add to Queue</string>
-    <string name="ip_address">10.0.1.10</string>
+    <string name="ip_address">droidbox</string>
     <string name="title_activity_songs_in_album">SongsInAlbumActivity</string>
     <string name="title_activity_songs_in_artist">SongsInArtistActivity</string>
 
