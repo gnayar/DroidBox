@@ -8,7 +8,10 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +29,20 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);   
+        
+        WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        Log.d("wifiInfo", wifiInfo.toString());
+        Log.d("SSID",wifiInfo.getSSID());
+
+
+        int ssid;
+        ssid = wifiInfo.getSSID().compareTo("\"uf\"");
+        Log.d("flag" ,String.valueOf(ssid));
+        if(ssid != 0) {
+        	Toast.makeText(this, "Please connect to uf", Toast.LENGTH_SHORT).show();
+        	startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+        }
         
     }
 

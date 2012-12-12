@@ -42,7 +42,7 @@ public class QueueListAdapter extends ArrayAdapter<Song> {
 		TextView artist = (TextView) convertView.findViewById(R.id.artist);
 		artist.setText(song.getArtist());
 //		TextView numVotes = (TextView) convertView.findViewById(R.id.num_votes);
-	//	numVotes.setText(song.getNumVotes());
+		//	numVotes.setText(song.getNumVotes());
 		ImageView arrow = (ImageView) convertView.findViewById(R.id.up_arrow);
 		
 		arrow.setOnClickListener(new View.OnClickListener() {
