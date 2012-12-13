@@ -37,10 +37,10 @@ public class LoginActivity extends Activity {
 
 
         int ssid;
-        ssid = wifiInfo.getSSID().compareTo("\"uf\"");
+        ssid = wifiInfo.getSSID().compareTo("\"droidbox\"");
         Log.d("flag" ,String.valueOf(ssid));
         if(ssid != 0) {
-        	Toast.makeText(this, "Please connect to uf", Toast.LENGTH_SHORT).show();
+        	Toast.makeText(this, "Please connect to droidbox", Toast.LENGTH_SHORT).show();
         	startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
         }
         
